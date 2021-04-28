@@ -20,3 +20,12 @@
 
     width: 110px;
 }
+
+.initial-contact {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #eff7ff;
+    width: 500px;
+    border-radius: 25px;
+}
