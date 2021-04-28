@@ -1,4 +1,7 @@
-
+.responsive {
+    width: 100%;
+    height: auto;
+}
 
 .top {
     height: 115px;
@@ -14,14 +17,14 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
-    width: 110px;
+    max-width: 110px;
 }
 
 .initial-contact {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    width: 550px;
+    max-width: 550px;
     border-radius: 25px;
     background-color: #eff7ff;
     font-size: 19px;
