@@ -28,4 +28,20 @@
     border: 2px solid #eff7ff;
     width: 500px;
     border-radius: 25px;
+    background-color: #eff7ff;
+}
+
+.initial-button {
+    border: 2px solid #b2d8ff;
+    padding: 8px;
+    background-color: #f5faff;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #5aacff;
+}
+
+.initial-button:hover {
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    background-color: #b2d8ff;
 }
