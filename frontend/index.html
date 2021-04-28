@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="stylesheets/first-style.css">
         <link rel="stylesheet" href="stylesheets/second-style.css">
+        <link rel="stylesheet" href="stylesheets/universal.css">
         <title>Friday</title>
       </head>
       <body>
@@ -17,9 +18,9 @@
           
           <div class="banner-div" id="banner-div">
             <img src="images/fridaybanner.gif" class="fridayBanner responsive">
+            <br><br><br><br>
           </div>
-          <br><br><br><br>
-        <div class="initial-contact responsive" id="initial-contact">
+        <div class="initial-contact responsive shadow" id="initial-contact">
             <br><br>
             Testing<br>
             Have you ever had to carry your group through a group project?<br>
@@ -29,13 +30,22 @@
             <button class="initial-button" id="initial-button">Continue</button>
             <br><br><br>
         </div>
-        <div class="find-project responsive" id="find-project">
+        <div class="find-or-create-project responsive shadow" id="find-or-create-project">
+          <br>
+          <button class="initial-button" id="create-new-project-button">Create New Project</button><br><br>
+          <button class="initial-button" id="find-project-button">Find a Project</button>
+          <br><br>
+        </div>
+        
+        <div class="find-project responsive shadow" id="find-project">
           <br>
           <p class="search-by-name" id="search-by-name">Search Project by Name</p>
           <input type=search class="project-input" placeholder="Name of Project">
-          <br><br><br>
+          <br><br>
+          <button class="initial-button">Find Project</button>
+          <br><br>
         </div>
-
+            <br><br><br>
         <script type="text/javascript" src="index.js"></script>
       </body>
 
