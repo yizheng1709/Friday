@@ -25,6 +25,7 @@
     border-radius: 25px;
     background-color: #eff7ff;
     font-size: 19px;
+    box-shadow: 2px 2px 9px rgb(235, 235, 235)
 }
 
 .initial-button {
