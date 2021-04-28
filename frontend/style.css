@@ -26,9 +26,10 @@
     margin-left: auto;
     margin-right: auto;
     border: 2px solid #eff7ff;
-    width: 500px;
+    width: 550px;
     border-radius: 25px;
     background-color: #eff7ff;
+    font-size: 19px;
 }
 
 .initial-button {
@@ -36,7 +37,7 @@
     padding: 8px;
     background-color: #f5faff;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 18px;
     color: #5aacff;
 }
 
@@ -44,4 +45,13 @@
     border: 2px solid #ffffff;
     color: #ffffff;
     background-color: #b2d8ff;
+}
+
+.find-project {
+    display: none;
+    background-color: aqua;
+    width: 30px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
