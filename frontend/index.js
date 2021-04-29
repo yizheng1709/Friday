@@ -24,6 +24,7 @@ function findProjectForm() {
 
 function goBackToInitial() {
     findProject.style.display = "none"
+    findOrCreateProject.style.display = "none"
     initialContact.style.display = "block"
 }
 

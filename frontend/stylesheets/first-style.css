@@ -28,8 +28,9 @@
     padding: 8px;
     background-color: #f5faff;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 22px;
     color: #5aacff;
+    font-family: 'Crimson Text', serif;
 }
 
 .initial-button:hover {

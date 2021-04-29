@@ -9,6 +9,7 @@
     background-color: #eff7ff;
     max-width: 300px;
     display: none;
+    border-radius: 25px;
 }
 
 .search-by-name {
