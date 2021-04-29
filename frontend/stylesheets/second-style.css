@@ -1,7 +1,7 @@
 .find-project {
     display: none;
     background-color: #eff7ff;
-    max-width: 300px;
+    max-width: 350px;
     border-radius: 25px;
 }
 
@@ -12,9 +12,15 @@
     border-radius: 25px;
 }
 
+.small-space {
+    font-size: 1.8px;
+}
+
 .search-by-name {
     color:#5aacff;
-    font-size: 25px;
+    font-size: 31px;
+    letter-spacing: 1px;
+    font-family: 'Crimson Text', serif;
 }
 
 .project-input {
