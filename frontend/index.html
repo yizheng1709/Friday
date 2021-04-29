@@ -22,16 +22,51 @@
             <img src="images/fridaybanner.gif" class="fridayBanner responsive">
             <br><br><br><br>
           </div>
-        <div class="initial-contact responsive shadow center" id="initial-contact">
-            <br><br>
-            
-            Have you ever had to carry your group through a group project?<br>
-            Are you tired of pulling all-nighters to finish other people's parts?<br>
-            Enter <strong>Friday</strong>!
-            <br><br><br>
+        <!-- <div class="initial-contact responsive shadow center" id="initial-contact"> -->
+        
+            <!-- Slideshow container -->
+            <div class="slideshow-container initial-contact responsive shadow center" id="initial-contact"">
+
+              <!-- Full-width images with number and caption text -->
+              <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img src="images/one.png" style="width:100%">
+                <div class="text">Caption Text</div>
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img src="images/two.png" style="width:100%">
+                <div class="text">Caption Two</div>
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="images/three.png" style="width:100%">
+                <div class="text">Caption Three</div>
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="images/four.png" style="width:100%">
+                <div class="text">Caption Three</div>
+              </div>
+
+              <!-- Next and previous buttons -->
+              <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
+              <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
             <button class="initial-button" id="initial-button">Continue</button>
             <br><br><br>
-        </div>
         <div class="find-or-create-project responsive shadow center" id="find-or-create-project">
           <br>
           <button class="initial-button" id="create-new-project-button">Create New Project</button><br><br>
@@ -47,7 +82,8 @@
           <button class="initial-button">Find Project</button>
           <br><br>
         </div>
-            <br><br><br>
+            <br><br><br><br><br><br><br>
+        <script type="text/javascript" src="image-gallery.js"></script>
         <script type="text/javascript" src="index.js"></script>
       </body>
 
