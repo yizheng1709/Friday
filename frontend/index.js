@@ -8,6 +8,7 @@ const findProjectButton = document.getElementById("find-project-button")
 const findProject = document.getElementById("find-project")
 const logo = document.getElementById("logo")
 const creatingProjectDiv = document.getElementById("creating-project-div")
+const creatingProjectForm = document.getElementById("creating-project-form")
 
 
 function deleteInitialAndContinue() {
@@ -30,12 +31,18 @@ function findProjectForm() {
 function goBackToInitial() {
     findProject.style.display = "none"
     findOrCreateProject.style.display = "none"
+    creatingProjectDiv.style.display = "none"
     initialContact.style.display = "block"
     initialDiv.style.display = "block"
     dots.style.display = "block"
+}
+
+function submitProjectName(e) {
+    e.preventDefault()
 }
 
 initialButton.addEventListener("click", deleteInitialAndContinue)
 logo.addEventListener("click", goBackToInitial)
 findProjectButton.addEventListener("click", findProjectForm)
 createNewProjectButton.addEventListener("click", newProjectForm)
+creatingProjectForm.addEventListener("submit", )

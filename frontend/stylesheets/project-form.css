@@ -1,5 +1,8 @@
 .creating-project-div {
     display: none;
+    background-color: #eff7ff;
+    max-width: 300px;
+    border-radius: 25px;
 }
 
 .project-font {
@@ -13,5 +16,9 @@
     font-size: 15px;
     padding: 3px;
     border-radius: 5px;
+    border: 1px solid white;
+}
+
+.creating-project-input:hover {
     border: 1px solid #5aacff;
 }

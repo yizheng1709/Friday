@@ -47,7 +47,7 @@
             </div>
             <br>
 
-            <div id="dots" style="text-align:center">
+            <div id="dots" style="text-align:center" class="responsive">
               <span class="dot" onclick="currentSlide(1)"></span>
               <span class="dot" onclick="currentSlide(2)"></span>
               <span class="dot" onclick="currentSlide(3)"></span>
@@ -71,14 +71,16 @@
           </button>
           <br><br>
         </div>
-        <div class="creating-project-div center" id="creating-project-div">
+
+        <div class="creating-project-div center responsive shadow" id="creating-project-div">
           <form id="creating-project-form">
+            <br>
             <p class="project-name project-font">Project Name</p>
             <input type="text" class="creating-project-input" placeholder="Project Name">
-            <br><br>
-            <input type="submit" class="initial-button bold">
+            <br><br><br>
+            <input type="submit" class="initial-button bold" value="Next">
+            <br><br><br><br>
           </form>
-
         </div>
         
         <div class="find-project responsive shadow center" id="find-project">
