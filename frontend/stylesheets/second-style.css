@@ -3,15 +3,9 @@
     background-color: #eff7ff;
     max-width: 300px;
     border-radius: 25px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .find-or-create-project {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     background-color: #eff7ff;
     max-width: 300px;
     display: none;
