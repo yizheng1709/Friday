@@ -7,6 +7,7 @@ const createNewProjectButton = document.getElementById("create-new-project-butto
 const findProjectButton = document.getElementById("find-project-button")
 const findProject = document.getElementById("find-project")
 const logo = document.getElementById("logo")
+const creatingProjectDiv = document.getElementById("creating-project-div")
 
 
 function deleteInitialAndContinue() {
@@ -18,7 +19,7 @@ function deleteInitialAndContinue() {
 
 function newProjectForm() {
     findOrCreateProject.style.display = "none"
-    
+    creatingProjectDiv.style.display = "block"
 }
 
 function findProjectForm() {

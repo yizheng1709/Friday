@@ -1,0 +1,17 @@
+.creating-project-div {
+    display: none;
+}
+
+.project-font {
+    font-family: 'Crimson Text', serif;
+    font-weight: bold;
+    font-size: 28px;
+    color: #5aacff;
+}
+
+.creating-project-input {
+    font-size: 15px;
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid #5aacff;
+}
