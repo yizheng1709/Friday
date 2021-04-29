@@ -1,5 +1,7 @@
 const initialButton = document.getElementById("initial-button")
 const initialContact = document.getElementById("initial-contact")
+const initialDiv = document.getElementById("initial-div")
+const dots = document.getElementById("dots")
 const findOrCreateProject = document.getElementById("find-or-create-project")
 const createNewProjectButton = document.getElementById("create-new-project-button")
 const findProjectButton = document.getElementById("find-project-button")
@@ -9,6 +11,8 @@ const logo = document.getElementById("logo")
 
 function deleteInitialAndContinue() {
     initialContact.style.display = "none"
+    initialDiv.style.display = "none"
+    dots.style.display = "none"
     findOrCreateProject.style.display = "block"
 }
 
@@ -26,6 +30,8 @@ function goBackToInitial() {
     findProject.style.display = "none"
     findOrCreateProject.style.display = "none"
     initialContact.style.display = "block"
+    initialDiv.style.display = "block"
+    dots.style.display = "block"
 }
 
 initialButton.addEventListener("click", deleteInitialAndContinue)

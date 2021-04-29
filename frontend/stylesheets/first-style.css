@@ -16,6 +16,10 @@
     max-width: 110px;
 }
 
+.initial-div {
+    display: block;
+}
+
 .initial-button {
     border: 2px solid #b2d8ff;
     padding: 8px;
