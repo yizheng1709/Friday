@@ -72,6 +72,8 @@ function newProjectForm() {
             <p class="project-name project-font">Group Member</p>
             <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
             <br><br><br>
+            <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
+            <br><br>
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br><br>
           </form>
