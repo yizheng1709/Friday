@@ -11,6 +11,10 @@ const creatingProjectForm = document.getElementById("creating-project-form")
 const mainContainer = document.getElementById("main-container")
 const galleryContainer = document.getElementById("gallery-container")
 
+function removeChildrenFromMain(){
+    Array.from(mainContainer.children).forEach(child => child.remove())
+}
+
 function findOrCreateProjectDiv() {
     mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
     id="find-or-create-project">
@@ -25,19 +29,34 @@ function findOrCreateProjectDiv() {
   </div><br><br><br><br><br>`
 }
 
+function askUserForEmail() {
+    removeChildrenFromMain()
+    mainContainer.innerHTML += `
+    <div class="responsive center shadow find-or-create-project" id="ask-user-email">
+    <br><br>
+        <p class="project-name project-font">Please enter your name:</p>
+        <input type="text" class="creating-project-input" placeholder="Name">
+        <br><br><br>
+        <button class="initial-button" id="received-user-email">Next</button>
+        <br><br>
+    </div><br><br><br><br><br>
+    `
+    document.getElementById("received-user-email").addEventListener("click", newProjectForm)
+}
+
 function deleteInitialAndContinue() {
-    Array.from(mainContainer.children).forEach(child => child.remove())
+    removeChildrenFromMain()
     findOrCreateProjectDiv()
     const findProjectButton = document.getElementById("find-project-button")
     const createNewProjectButton = document.getElementById("create-new-project-button")
     findProjectButton.addEventListener("click", findProjectForm)
-    createNewProjectButton.addEventListener("click", newProjectForm)
+    createNewProjectButton.addEventListener("click", askUserForEmail)
 }
 
 function newProjectForm() {
     // findOrCreateProject.style.display = "none"
     // creatingProjectDiv.style.display = "block"
-    Array.from(mainContainer.children).forEach(child => child.remove())
+    removeChildrenFromMain()
     mainContainer.innerHTML += `
     <div class="creating-project-div center responsive shadow" id="creating-project-div">
           <form id="creating-project-form">
@@ -62,7 +81,7 @@ function newProjectForm() {
 }
 
 function findProjectForm() {
-    Array.from(mainContainer.children).forEach(child => child.remove())
+    removeChildrenFromMain()
     mainContainer.innerHTML += `
         <div class="find-project responsive shadow center" id="find-project">
           <br>
