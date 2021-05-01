@@ -20,7 +20,9 @@ function homeButton() {
     <div class="center responsive">
     <button class="initial-button bold" id="home-button">Back to Home</button>
     </div>
+    <br><br><br><br><br>
     `
+    document.getElementById("home-button").addEventListener("click", goBackToInitial)
 }
 
 function findOrCreateProjectDiv() {
@@ -34,7 +36,8 @@ function findOrCreateProjectDiv() {
       <strong>Find a Project</strong>
     </button>
     <br><br>
-  </div><br><br><br><br><br>`
+  </div><br><br><br>`
+  homeButton()
 }
 
 function askUserForEmail() {
@@ -47,8 +50,9 @@ function askUserForEmail() {
         <br><br><br>
         <button class="initial-button bold" id="received-user-email">Next</button>
         <br><br>
-    </div><br><br><br><br><br>
+    </div><br><br><br>
     `
+    homeButton()
     document.getElementById("received-user-email").addEventListener("click", newProjectForm)
 }
 
@@ -95,7 +99,8 @@ function newProjectForm() {
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br><br>
           </form>
-        </div><br><br><br><br><br>`
+        </div><br><br><br>`
+    homeButton()
     const creatingProjectForm = document.getElementById("creating-project-form")
     const addAnotherMember = document.getElementById("add-another-member")
     creatingProjectForm.addEventListener("submit", submitProjectName)
@@ -116,7 +121,8 @@ function findProjectForm() {
             <strong>Find Project</strong>
           </button>
           <br><br><br>
-        </div><br><br><br><br><br>`
+        </div><br><br><br>`
+    homeButton()
 }
 
 function createInitialContact() {
