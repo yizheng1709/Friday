@@ -53,6 +53,14 @@ function deleteInitialAndContinue() {
     createNewProjectButton.addEventListener("click", askUserForEmail)
 }
 
+function addAnotherMemberInput() {
+    const groupMembers = document.getElementById("group-members")
+    groupMembers.innerHTML += `
+    <p class="project-name project-font">Group Member</p>
+    <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
+    `
+}
+
 function newProjectForm() {
     // findOrCreateProject.style.display = "none"
     // creatingProjectDiv.style.display = "block"
@@ -67,10 +75,12 @@ function newProjectForm() {
             <input type="date" class="creating-project-input">
             <p class="project-name project-font">Group Supervisor</p>
             <input type="text" class="creating-project-input" placeholder="E-mail of Group Supervisor">
+            <div id="group-members">
             <p class="project-name project-font">Group Member</p>
             <input type="text" class="creating-project-input" placeholder="E-mail of Group Member">
             <p class="project-name project-font">Group Member</p>
             <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
+            </div>
             <br><br><br>
             <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
             <br><br>
@@ -79,7 +89,9 @@ function newProjectForm() {
           </form>
         </div><br><br><br><br><br>`
     const creatingProjectForm = document.getElementById("creating-project-form")
+    const addAnotherMember = document.getElementById("add-another-member")
     creatingProjectForm.addEventListener("submit", submitProjectName)
+    addAnotherMember.addEventListener("click", addAnotherMemberInput)
 }
 
 function findProjectForm() {
