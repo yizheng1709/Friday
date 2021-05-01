@@ -173,7 +173,20 @@ function submitProjectName(e) {
     // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     const attributes = Array.from(e.target).slice(0, 2).map(a => a.value)
     let project = new Project(attributes[0], attributes[1])
-    console.log(project)
+    // console.log(project)
+    removeChildrenFromMain()
+    mainContainer.innerHTML += `
+    <div class="creating-project-div center responsive shadow">
+    <br><br>
+      <p class="search-by-name project-font">Project Name</p>
+      <p>${project.name}</p>
+      <p class="search-by-name project-font">Project Due Date</p>
+      <p>${project.dueDate}</p>
+    <br><br>
+    </div>
+    <br><br><br><br><br>
+    `
+    homeButton()
     // fetch("localhost:3000/projects", {
     //     method: 'POST', 
     //     headers: {
