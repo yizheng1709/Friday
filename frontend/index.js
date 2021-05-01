@@ -46,6 +46,12 @@ function newProjectForm() {
             <input type="text" class="creating-project-input" placeholder="Project Name">
             <p class="project-name project-font">Due Date</p>
             <input type="date" class="creating-project-input">
+            <p class="project-name project-font">Group Supervisor</p>
+            <input type="text" class="creating-project-input" placeholder="E-mail of Group Supervisor">
+            <p class="project-name project-font">Group Member</p>
+            <input type="text" class="creating-project-input" placeholder="E-mail of Group Member">
+            <p class="project-name project-font">Group Member</p>
+            <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
             <br><br><br>
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br><br>
