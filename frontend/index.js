@@ -89,11 +89,11 @@ function newProjectForm() {
             <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
             </div>
             <br><br><br>
-            <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
-            <br><br>
             <input type="submit" class="initial-button bold" value="Next">
-            <br><br><br><br>
+            <br><br><br>
           </form>
+          <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
+            <br><br><br>
         </div><br><br><br>`
     homeButton()
     const creatingProjectForm = document.getElementById("creating-project-form")
@@ -169,22 +169,25 @@ function createInitialContact() {
 
 function submitProjectName(e) {
     e.preventDefault()
-    Array.from(e.target).forEach(ele => console.log(ele.value))
+    // Array.from(e.target).forEach(ele => console.log(ele.value))
     // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    fetch("localhost:3000/projects", {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(response => response.json())
-    //   .then(data => {
-    //     console.log('Success:', data);
+    const attributes = Array.from(e.target).slice(0, 2).map(a => a.value)
+    let project = new Project(attributes[0], attributes[1])
+    console.log(project)
+    // fetch("localhost:3000/projects", {
+    //     method: 'POST', 
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
     //   })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
+    //   .then(response => response.json())
+    // //   .then(data => {
+    // //     console.log('Success:', data);
+    // //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   })
     // console.log(e)
 }
 
