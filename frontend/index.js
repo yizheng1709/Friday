@@ -3,13 +3,8 @@ const initialContact = document.getElementById("initial-contact")
 const initialDiv = document.getElementById("initial-div")
 const dots = document.getElementById("dots")
 const createNewProjectButton = document.getElementById("create-new-project-button")
-const findProjectButton = document.getElementById("find-project-button")
-const findProject = document.getElementById("find-project")
 const logo = document.getElementById("logo")
-const creatingProjectDiv = document.getElementById("creating-project-div")
-const creatingProjectForm = document.getElementById("creating-project-form")
 const mainContainer = document.getElementById("main-container")
-const galleryContainer = document.getElementById("gallery-container")
 
 function removeChildrenFromMain(){
     Array.from(mainContainer.children).forEach(child => child.remove())
@@ -74,8 +69,6 @@ function addAnotherMemberInput() {
 }
 
 function newProjectForm() {
-    // findOrCreateProject.style.display = "none"
-    // creatingProjectDiv.style.display = "block"
     removeChildrenFromMain()
     mainContainer.innerHTML += `
     <div class="creating-project-div center responsive shadow" id="creating-project-div">
@@ -175,8 +168,6 @@ function submitProjectName(e) {
 }
 
 function goBackToInitial() {
-    // const findOrCreateProject = document.getElementById("find-or-create-project")
-    // findOrCreateProject.remove()
     Array.from(mainContainer.children).forEach(child => child.remove())
     createInitialContact()
     document.getElementById("first-click").click()
@@ -186,6 +177,3 @@ function goBackToInitial() {
 
 initialButton.addEventListener("click", deleteInitialAndContinue)
 logo.addEventListener("click", goBackToInitial)
-// findProjectButton.addEventListener("click", findProjectForm)
-// createNewProjectButton.addEventListener("click", newProjectForm)
-// creatingProjectForm.addEventListener("submit", submitProjectName)
