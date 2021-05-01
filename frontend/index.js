@@ -44,6 +44,8 @@ function newProjectForm() {
             <br>
             <p class="project-name project-font">Project Name</p>
             <input type="text" class="creating-project-input" placeholder="Project Name">
+            <p class="project-name project-font">Due Date</p>
+            <input type="date" class="creating-project-input">
             <br><br><br>
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br><br>
@@ -61,7 +63,7 @@ function findProjectForm() {
           <p class="search-by-name" id="search-by-name">
             <strong>Searc<span class="small-space"> </span>h Project by Name</strong>
           </p>
-          <input type=search class="project-input" placeholder="Name of Project">
+          <input type="search" class="project-input" placeholder="Name of Project">
           <br><br><br>
           <button class="initial-button">
             <strong>Find Project</strong>
