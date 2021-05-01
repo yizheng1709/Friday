@@ -48,7 +48,9 @@ function newProjectForm() {
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br><br>
           </form>
-        </div>`
+        </div><br><br><br><br><br>`
+    const creatingProjectForm = document.getElementById("creating-project-form")
+    creatingProjectForm.addEventListener("submit", submitProjectName)
 }
 
 function findProjectForm() {
@@ -109,6 +111,7 @@ function createInitialContact() {
   <br><br><br>
   </div>
   </div>
+  <br><br>
   `
 }
 

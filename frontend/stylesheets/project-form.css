@@ -1,5 +1,5 @@
 .creating-project-div {
-    display: none;
+    display: block;
     background-color: #eff7ff;
     max-width: 300px;
     border-radius: 25px;
