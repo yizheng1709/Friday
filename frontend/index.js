@@ -35,8 +35,20 @@ function deleteInitialAndContinue() {
 }
 
 function newProjectForm() {
-    findOrCreateProject.style.display = "none"
-    creatingProjectDiv.style.display = "block"
+    // findOrCreateProject.style.display = "none"
+    // creatingProjectDiv.style.display = "block"
+    Array.from(mainContainer.children).forEach(child => child.remove())
+    mainContainer.innerHTML += `
+    <div class="creating-project-div center responsive shadow" id="creating-project-div">
+          <form id="creating-project-form">
+            <br>
+            <p class="project-name project-font">Project Name</p>
+            <input type="text" class="creating-project-input" placeholder="Project Name">
+            <br><br><br>
+            <input type="submit" class="initial-button bold" value="Next">
+            <br><br><br><br>
+          </form>
+        </div>`
 }
 
 function findProjectForm() {
