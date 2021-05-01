@@ -15,6 +15,14 @@ function removeChildrenFromMain(){
     Array.from(mainContainer.children).forEach(child => child.remove())
 }
 
+function homeButton() {
+    mainContainer.innerHTML += `
+    <div class="center responsive">
+    <button class="initial-button bold" id="home-button">Back to Home</button>
+    </div>
+    `
+}
+
 function findOrCreateProjectDiv() {
     mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
     id="find-or-create-project">
@@ -37,7 +45,7 @@ function askUserForEmail() {
         <p class="project-name project-font">Please enter your name:</p>
         <input type="text" class="creating-project-input" placeholder="Name">
         <br><br><br>
-        <button class="initial-button" id="received-user-email">Next</button>
+        <button class="initial-button bold" id="received-user-email">Next</button>
         <br><br>
     </div><br><br><br><br><br>
     `
