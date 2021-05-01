@@ -16,6 +16,10 @@
     max-width: 110px;
 }
 
+.gallery-container {
+  display: block;
+}
+
 .initial-div {
     display: block;
 }
@@ -44,6 +48,7 @@
   max-width: 500px;
   position: relative;
   margin: auto;
+  /* display: block; */
   border-radius: 25px;
   background-color: #eff7ff;
 }

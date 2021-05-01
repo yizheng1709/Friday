@@ -1,5 +1,5 @@
 .find-project {
-    display: none;
+    display: block;
     background-color: #eff7ff;
     max-width: 350px;
     border-radius: 25px;
@@ -8,7 +8,7 @@
 .find-or-create-project {
     background-color: #eff7ff;
     max-width: 300px;
-    display: none;
+    display: block;
     border-radius: 25px;
 }
 
