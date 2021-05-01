@@ -16,3 +16,8 @@
 .bold {
     font-weight: bold;
 }
+
+.footer {
+    background-color: #eff7ff;
+    height: 20px;
+}

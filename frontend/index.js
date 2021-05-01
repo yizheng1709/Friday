@@ -20,6 +20,7 @@ function homeButton() {
     document.getElementById("home-button").addEventListener("click", goBackToInitial)
 }
 
+
 function findOrCreateProjectDiv() {
     mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
     id="find-or-create-project">
@@ -33,6 +34,7 @@ function findOrCreateProjectDiv() {
     <br><br>
   </div><br><br><br>`
   homeButton()
+ 
 }
 
 function askUserForEmail() {
@@ -98,6 +100,7 @@ function newProjectForm() {
     const addAnotherMember = document.getElementById("add-another-member")
     creatingProjectForm.addEventListener("submit", submitProjectName)
     addAnotherMember.addEventListener("click", addAnotherMemberInput)
+    
 }
 
 function findProjectForm() {
@@ -116,6 +119,7 @@ function findProjectForm() {
           <br><br><br>
         </div><br><br><br>`
     homeButton()
+    
 }
 
 function createInitialContact() {
@@ -165,14 +169,32 @@ function createInitialContact() {
 
 function submitProjectName(e) {
     e.preventDefault()
+    Array.from(e.target).forEach(ele => console.log(ele.value))
+    // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    fetch("localhost:3000/projects", {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+    //   .then(data => {
+    //     console.log('Success:', data);
+    //   })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+    // console.log(e)
 }
 
 function goBackToInitial() {
-    Array.from(mainContainer.children).forEach(child => child.remove())
+    removeChildrenFromMain()
     createInitialContact()
     document.getElementById("first-click").click()
     const initialButton = document.getElementById("initial-button")
     initialButton.addEventListener("click", deleteInitialAndContinue)
+    
 }
 
 initialButton.addEventListener("click", deleteInitialAndContinue)
