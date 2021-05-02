@@ -59,7 +59,13 @@ function askUserForEmail() {
 }
 
 function findAllProjects() {
+  removeChildrenFromMain()
+  fetch("http://localhost:3000/projects")
+  .then(resp => resp.json())
+  .then(data => console.log(data)) 
+  // mainContainer.innerHTML += `
   
+  // `
 }
 
 function deleteInitialAndContinue() {
