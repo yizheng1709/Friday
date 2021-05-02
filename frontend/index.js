@@ -33,6 +33,10 @@ function findOrCreateProjectDiv() {
       <strong>Find a Project</strong>
     </button>
     <br><br>
+    <button class="initial-button" id="all-projects-button">
+      <strong>All Projects</strong>
+    </button>
+    <br><br>
   </div><br><br><br>`
   homeButton()
  
@@ -54,13 +58,19 @@ function askUserForEmail() {
     document.getElementById("received-user-email").addEventListener("click", newProjectForm)
 }
 
+function findAllProjects() {
+  
+}
+
 function deleteInitialAndContinue() {
     removeChildrenFromMain()
     findOrCreateProjectDiv()
     const findProjectButton = document.getElementById("find-project-button")
     const createNewProjectButton = document.getElementById("create-new-project-button")
+    const findAllProjectsButton = document.getElementById("all-projects-button")
     findProjectButton.addEventListener("click", findProjectForm)
     createNewProjectButton.addEventListener("click", askUserForEmail)
+    findAllProjectsButton.addEventListener("click", findAllProjects)
 }
 
 function addAnotherMemberInput() {
