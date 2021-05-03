@@ -25,3 +25,7 @@
 .fake-hover:hover {
     cursor: pointer;
 }
+
+.initial-button:hover {
+    cursor: pointer;
+}

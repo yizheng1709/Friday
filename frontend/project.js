@@ -1,7 +1,8 @@
 class Project {
-    constructor(name, dueDate) {
+    constructor(id, name, due_date) {
+        this.id = id
         this.name = name 
-        this.dueDate = dueDate
+        this.dueDate = due_date
     }
 }
 

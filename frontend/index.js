@@ -94,16 +94,9 @@ function findAllProjects() {
   const allProjectsDiv = document.getElementById("all-projects-div")
   fetch("http://localhost:3000/projects")
   .then(resp => resp.json())
-  .then(data => data.map(project => new Project(project["name"], project["due_date"])))
+  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"])))
   .then(projects => projects.forEach(project => allProjectsDiv.innerHTML += generateProjectHTML(project)))
-  
-  // debugger
-  // allProjects = Array.from(allProjects)
-  // for (let project in allProjects){
-  //   debugger
-  //   console.log(project.name, project.dueDate)
-  // }
-  // Array.from(allProjects).forEach(project => console.log(project))
+
 }
 
 function deleteInitialAndContinue() {
@@ -236,8 +229,9 @@ function submitProjectName(e) {
     e.preventDefault()
     // Array.from(e.target).forEach(ele => console.log(ele.value))
     // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    const attributes = Array.from(e.target).slice(0, 2).map(a => a.value)
-    let project = new Project(attributes[0], attributes[1])
+    const attributes = Array.from(e.target).slice(0, 3).map(a => a.value)
+    // {debugger}
+    let project = new Project(attributes[0], attributes[1], attributes[2])
     // console.log(project)
     removeChildrenFromMain()
     mainContainer.innerHTML += `
