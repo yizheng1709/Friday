@@ -1,7 +1,7 @@
 .creating-project-div {
     display: block;
     background-color: #eff7ff;
-    max-width: 460px;
+    max-width: 560px;
     border-radius: 25px;
 }
 
@@ -21,4 +21,8 @@
 
 .creating-project-input:hover {
     border: 1px solid #5aacff;
+}
+
+.task-input {
+    width: 400px;
 }

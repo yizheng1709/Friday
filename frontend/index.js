@@ -131,8 +131,12 @@ function newProjectForm() {
             <div id="group-members">
             <p class="project-name project-font">Group Member</p>
             <input type="text" class="creating-project-input" placeholder="E-mail of Group Member">
+            <p class="project-name project-font">Task</p>
+            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
             <p class="project-name project-font">Group Member</p>
             <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
+            <p class="project-name project-font">Task</p>
+            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
             </div>
             <br><br><br>
             <input type="submit" class="initial-button bold" value="Next">
