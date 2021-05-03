@@ -21,3 +21,7 @@
     background-color: #eff7ff;
     height: 20px;
 }
+
+.fake-hover:hover {
+    cursor: pointer;
+}

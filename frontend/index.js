@@ -32,7 +32,6 @@ function findOrCreateProjectDiv() {
     <br><br>
   </div><br><br><br>`
   homeButton()
- 
 }
 
 function askUserForEmail() {
@@ -52,20 +51,22 @@ function askUserForEmail() {
 }
 
 function generateProjectHTML(projectObject) {
-  `
-  <p class="project-font">${projectObject.name}</p>
-  <p class="project-font">${projectObject.dueDate}</p>
+  return `
+  <p class="project-font">Project Name: ${projectObject.name}</p>
+  <p class="project-font">Due Date: ${projectObject.dueDate}</p>
   `
 }
 
 function fetchAllProjects() {
   // removeChildrenFromMain()
-  let result = (fetch("http://localhost:3000/projects")
+  fetch("http://localhost:3000/projects")
   .then(resp => resp.json())
+  .then(data => data.map(project => new Project(project["name"], project["due_date"])))
   // .then(data => data.forEach(project => console.log(project["due_date"]))))
-  .then(data => data.map(project => new Project(project["name"], project["due_date"]))) )
-  debugger
-  return result
+  // .then(projects => projects.forEach(project => generateProjectHTML(project)))
+  // render project as i create them
+  // debugger
+  // return result
   // console.log(allProjects)
   // mainContainer.innerHTML += `
   // <div class="shadow center responsive creating-project-div" id="all-projects-div">
@@ -78,9 +79,24 @@ function fetchAllProjects() {
   // homeButton()
 }
 
+function createDivForAllProjects() {
+  mainContainer.innerHTML += `
+  <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
+  </div>
+  <br><br>
+  `
+}
+
 function findAllProjects() {
   removeChildrenFromMain()
-  // let allProjects = fetchAllProjects()
+  createDivForAllProjects()
+  homeButton()
+  const allProjectsDiv = document.getElementById("all-projects-div")
+  fetch("http://localhost:3000/projects")
+  .then(resp => resp.json())
+  .then(data => data.map(project => new Project(project["name"], project["due_date"])))
+  .then(projects => projects.forEach(project => allProjectsDiv.innerHTML += generateProjectHTML(project)))
+  
   // debugger
   // allProjects = Array.from(allProjects)
   // for (let project in allProjects){
@@ -145,7 +161,6 @@ function newProjectForm() {
     const addAnotherMember = document.getElementById("add-another-member")
     creatingProjectForm.addEventListener("submit", submitProjectName)
     addAnotherMember.addEventListener("click", addAnotherMemberInput)
-    
 }
 
 function findProjectForm() {
@@ -164,7 +179,6 @@ function findProjectForm() {
           <br><br><br>
         </div><br><br><br>`
     homeButton()
-    
 }
 
 function createInitialContact() {
