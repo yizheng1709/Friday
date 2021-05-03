@@ -58,14 +58,43 @@ function askUserForEmail() {
     document.getElementById("received-user-email").addEventListener("click", newProjectForm)
 }
 
+function generateProjectHTML(projectObject) {
+  `
+  <p class="project-font">${projectObject.name}</p>
+  <p class="project-font">${projectObject.dueDate}</p>
+  `
+}
+
+function fetchAllProjects() {
+  // removeChildrenFromMain()
+  let result = (fetch("http://localhost:3000/projects")
+  .then(resp => resp.json())
+  // .then(data => data.forEach(project => console.log(project["due_date"]))))
+  .then(data => data.map(project => new Project(project["name"], project["due_date"]))) )
+  debugger
+  return result
+  // console.log(allProjects)
+  // mainContainer.innerHTML += `
+  // <div class="shadow center responsive creating-project-div" id="all-projects-div">
+  // <br><br>
+  // ${Array.from(allProjects).forEach(ele => generateProjectHTML(ele))}
+  // <br><br>
+  // </div>
+  // <br><br><br><br><br>
+  // `
+  // homeButton()
+}
+
 function findAllProjects() {
   removeChildrenFromMain()
-  fetch("http://localhost:3000/projects")
-  .then(resp => resp.json())
-  .then(data => console.log(data)) 
-  // mainContainer.innerHTML += `
-  
-  // `
+  // let allProjects = fetchAllProjects()
+  // debugger
+  // allProjects = Array.from(allProjects)
+  // for (let project in allProjects){
+  //   debugger
+  //   console.log(project.name, project.dueDate)
+  // }
+  // Array.from(allProjects).forEach(project => console.log(project))
 }
 
 function deleteInitialAndContinue() {
@@ -184,6 +213,12 @@ function createInitialContact() {
   `
 }
 
+function editProject(e) {
+  //show i just add check box to confirm that a task is done?
+  e.preventDefault()
+  //how to edit?
+}
+
 function submitProjectName(e) {
     e.preventDefault()
     // Array.from(e.target).forEach(ele => console.log(ele.value))
@@ -200,10 +235,14 @@ function submitProjectName(e) {
       <p class="search-by-name project-font">Project Due Date</p>
       <p>${project.dueDate}</p>
     <br><br>
+    <form>
+    <input type="submit" class="initial-button bold" value="Edit Project" id="edit-project"> 
+    <br><br>
     </div>
     <br><br><br><br><br>
     `
     homeButton()
+    document.getElementById("edit-project").addEventListener("submit", editProject)
     // fetch("localhost:3000/projects", {
     //     method: 'POST', 
     //     headers: {
