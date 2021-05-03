@@ -1,10 +1,3 @@
-const initialButton = document.getElementById("initial-button")
-const initialContact = document.getElementById("initial-contact")
-const initialDiv = document.getElementById("initial-div")
-const createNewProjectButton = document.getElementById("create-new-project-button")
-const logo = document.getElementById("logo")
-const mainContainer = document.getElementById("main-container")
-
 function removeChildrenFromMain(){
     Array.from(mainContainer.children).forEach(child => child.remove())
 }
