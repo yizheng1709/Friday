@@ -113,6 +113,8 @@ function addAnotherMemberInput() {
     groupMembers.innerHTML += `
     <p class="project-name project-font">Group Member</p>
     <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
+    <p class="project-name project-font">Task</p>
+            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
     `
 }
 
