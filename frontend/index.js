@@ -87,7 +87,7 @@ function createDivForAllProjects() {
   `
 }
 
-function goToProjectShowPage(e) {
+function findOneProject(e) {
   removeChildrenFromMain()
   const id = e.target.id
   mainContainer.innerHTML += `
@@ -113,7 +113,7 @@ function findAllProjects() {
     allProjectsDiv.innerHTML += generateProjectHTML(project)
   }))
   .then(() => Array.from(allProjectsDiv.children).forEach(function (child) {
-    child.addEventListener("click", goToProjectShowPage)}))
+    child.addEventListener("click", findOneProject)}))
   // Array.from(allProjectsDiv.children).forEach(projectElement => console.log(projectElement))
   // debugger
 }
