@@ -2,6 +2,8 @@ function removeChildrenFromMain(){
     Array.from(mainContainer.children).forEach(child => child.remove())
 }
 
+//generates home button that takes user back to initial page
+
 function homeButton() {
     mainContainer.innerHTML += `
     <div class="center responsive">
@@ -14,6 +16,10 @@ function homeButton() {
     document.getElementById("home-button").addEventListener("click", goBackToInitial)
 }
 
+/////////////////////////////////////////////////////////////////
+
+/// generates HTML that creates a div to store two buttons; one will take user to find project
+/// another button to create project
 
 function findOrCreateProjectDiv() {
     mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
@@ -50,6 +56,33 @@ function askUserForEmail() {
     document.getElementById("received-user-email").addEventListener("click", newProjectForm)
 }
 
+////////////////////////
+
+/// TASK FUNCTIONS ////
+
+
+function fetchTasks(projectObjectid) {
+  const projectContainer = document.getElementById(`${projectObjectid}`)
+  fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
+  .then(resp => resp.json())
+  .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"])))
+  .then(tasks => tasks.forEach(task => projectContainer.innerHTML += generateTaskHTML(task)))
+  // .then(tasks => console.log(tasks))
+}
+
+
+
+
+function generateTaskHTML(taskObject) {
+  return `
+  <p class="task-content">${taskObject["content"]}</p>
+  <li>${taskObject["memberEmail"]}</li>
+  `
+}
+
+
+//////////////////////////
+
 function generateProjectHTML(projectObject) {
   return `
   <p class="project-font fake-hover" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
@@ -58,25 +91,9 @@ function generateProjectHTML(projectObject) {
 }
 
 function fetchAllProjects() {
-  // removeChildrenFromMain()
   fetch("http://localhost:3000/projects")
   .then(resp => resp.json())
   .then(data => data.map(project => new Project(project["name"], project["due_date"])))
-  // .then(data => data.forEach(project => console.log(project["due_date"]))))
-  // .then(projects => projects.forEach(project => generateProjectHTML(project)))
-  // render project as i create them
-  // debugger
-  // return result
-  // console.log(allProjects)
-  // mainContainer.innerHTML += `
-  // <div class="shadow center responsive creating-project-div" id="all-projects-div">
-  // <br><br>
-  // ${Array.from(allProjects).forEach(ele => generateProjectHTML(ele))}
-  // <br><br>
-  // </div>
-  // <br><br><br><br><br>
-  // `
-  // homeButton()
 }
 
 function createDivForAllProjects() {
@@ -84,6 +101,19 @@ function createDivForAllProjects() {
   <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
   </div>
   <br><br>
+  `
+}
+
+
+function generateOneProjectHTML(projectObject){
+  return `
+  <p class="project-font" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
+  <p class="project-font" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
+  <form id="completed-project">
+  <input type="checkbox"> <span class="project-font bold">Completed?</span><br><br>
+  <input class="initial-button bold" type="submit" value="Submit Changes">
+  </form>
+  <br>
   `
 }
 
@@ -95,8 +125,19 @@ function findOneProject(e) {
   </div>
   <br><br>
   `
+  homeButton()
+  const oneProjectDiv = document.getElementById(`${id}`)
   fetch(`http://localhost:3000/projects/${id}`)
-  .then(resp => console.log(resp))
+  .then(resp => resp.json())
+  .then(project => {
+    return(
+      new Project(project["id"], project["name"], project["due_date"], project["completed"])
+      )
+  })
+  .then(project => oneProjectDiv.innerHTML += generateOneProjectHTML(project))
+  
+  fetchTasks(id)
+  // .then(project => oneProjectDiv.innerHTML += generateProjectHTML(project))
   //why is this givng me cors error
   
 }

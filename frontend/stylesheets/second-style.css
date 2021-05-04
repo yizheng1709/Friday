@@ -32,3 +32,10 @@
 .project-input:hover {
     border: 1px solid #5aacff;
 }
+
+.task-content {
+    color: #9169ff;
+    font-family: 'Crimson Text', serif;
+    font-size: 22px;
+    font-weight: bold;
+}
