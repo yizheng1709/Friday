@@ -52,8 +52,8 @@ function askUserForEmail() {
 
 function generateProjectHTML(projectObject) {
   return `
-  <p class="project-font">Project Name: ${projectObject.name}</p>
-  <p class="project-font">Due Date: ${projectObject.dueDate}</p>
+  <p class="project-font fake-hover" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
+  <p class="project-font fake-hover" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
   `
 }
 
@@ -87,6 +87,20 @@ function createDivForAllProjects() {
   `
 }
 
+function goToProjectShowPage(e) {
+  removeChildrenFromMain()
+  const id = e.target.id
+  mainContainer.innerHTML += `
+  <div class="shadow center responsive creating-project-div all-projects-div" id="${id}">
+  </div>
+  <br><br>
+  `
+  fetch(`http://localhost:3000/projects/${id}`)
+  .then(resp => console.log(resp))
+  //why is this givng me cors error
+  
+}
+
 function findAllProjects() {
   removeChildrenFromMain()
   createDivForAllProjects()
@@ -94,9 +108,14 @@ function findAllProjects() {
   const allProjectsDiv = document.getElementById("all-projects-div")
   fetch("http://localhost:3000/projects")
   .then(resp => resp.json())
-  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"])))
-  .then(projects => projects.forEach(project => allProjectsDiv.innerHTML += generateProjectHTML(project)))
-
+  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["completed"])))
+  .then(projects => projects.forEach(project => { 
+    allProjectsDiv.innerHTML += generateProjectHTML(project)
+  }))
+  .then(() => Array.from(allProjectsDiv.children).forEach(function (child) {
+    child.addEventListener("click", goToProjectShowPage)}))
+  // Array.from(allProjectsDiv.children).forEach(projectElement => console.log(projectElement))
+  // debugger
 }
 
 function deleteInitialAndContinue() {
@@ -116,7 +135,7 @@ function addAnotherMemberInput() {
     <p class="project-name project-font">Group Member</p>
     <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
     <p class="project-name project-font">Task</p>
-            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
+    <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
     `
 }
 
