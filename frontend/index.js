@@ -83,7 +83,7 @@ function fetchTasks(projectObjectid) {
   
   
   .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
-  // .then(resp => {debugger})
+
   .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
     task.addEventListener("submit", updateTask)
   }))
@@ -127,12 +127,6 @@ function generateProjectHTML(projectObject) {
 
 //////////////////////////////
 
-// function fetchAllProjects() {
-//   fetch("http://localhost:3000/projects")
-//   .then(resp => resp.json())
-//   .then(data => data.map(project => new Project(project["name"], project["due_date"])))
-// }
-
 function createDivForAllProjects() {
   mainContainer.innerHTML += `
   <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
@@ -170,7 +164,6 @@ function findOneProject(e) {
 
   fetch(`http://localhost:3000/projects/${id}`)
   .then(resp => resp.json())
-  // .then(resp => console.log(resp))
   .then(project => {
     return(
       new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
@@ -184,7 +177,6 @@ function findOneProject(e) {
 }
 
 function deleteProject(e) {
-  //should also remove the element with the id
   e.preventDefault()
   const id = e.target.id
   const options = {
@@ -217,10 +209,6 @@ function findAllProjects() {
     child.addEventListener("submit", deleteProject)
     }))
 
-
-    
-  // Array.from(allProjectsDiv.children).forEach(projectElement => console.log(projectElement))
-  // debugger
 }
 
 function deleteInitialAndContinue() {
@@ -281,21 +269,40 @@ function newProjectForm() {
     addAnotherMember.addEventListener("click", addAnotherMemberInput)
 }
 
+function findProjectBackend(e) {
+  debugger
+  e.preventDefault()
+  console.log(e.target)
+}
+
 function findProjectForm() {
     removeChildrenFromMain()
     mainContainer.innerHTML += `
         <div class="find-project responsive shadow center" id="find-project">
           <br>
-          <p class="search-by-name" id="search-by-name">
+          <p class="search-by-name label-font underline" id="search-by-name">
             <strong>Searc<span class="small-space"> </span>h Project by Name</strong>
           </p>
+          <form id="find-project-form">
           <input type="search" class="project-input" placeholder="Name of Project">
           <br><br><br>
-          <button class="initial-button">
-            <strong>Find Project</strong>
-          </button>
+          <input type="submit" class="initial-button bold" value="Find Project">
+          </form>
           <br><br><br>
         </div><br><br><br>`
+    const form = document.getElementById("find-project-form")
+    form.addEventListener("submit", findProjectBackend)
+
+    //   const options = {
+    //     headers = {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //       project: {name: e.target[0]}
+    //     })
+    //   }
+    //   fetch("http://localhost:3000/search")
+  
     homeButton()
 }
 

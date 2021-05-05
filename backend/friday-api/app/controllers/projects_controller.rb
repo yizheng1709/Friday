@@ -8,6 +8,10 @@ class ProjectsController < ApplicationController
         render json: project, only: [:id, :name, :due_date, :group_supervisor, :completed]
     end
 
+    def search 
+        binding.pry
+    end
+
     def create 
         project = Project.create(project_params)
         #AR create  method to build relationship
@@ -20,12 +24,10 @@ class ProjectsController < ApplicationController
     end
 
     def destroy
-        # binding.pry
         id = params[:project][:id]
         if id 
             Project.find_by_id(id).destroy 
         end
-        # binding.pry
     end
 
     private 
