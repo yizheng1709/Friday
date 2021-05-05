@@ -113,13 +113,14 @@ function generateTaskHTML(taskObject) {
 //this generates projects index
 
 function generateProjectHTML(projectObject) {
+  const id = projectObject.id
   return `
-  <span class="label-font underline">Project Name: </span>
-  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.name}</span><br>
-  <span class="label-font underline">Due Date: </span>
-  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br>
-  <form class="delete-project bold" id="${projectObject.id}">
-  <input class="initial-button small-button" type="submit" value="Delete Project">
+  <span class="label-font underline project${id}">Project Name: </span>
+  <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
+  <span class="label-font underline project${id}">Due Date: </span>
+  <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
+  <form class="delete-project bold project${id}" id="${id}">
+  <input class="initial-button small-button " type="submit" value="Delete Project">
   </form><br><br>
   `
 }
@@ -135,6 +136,7 @@ function generateProjectHTML(projectObject) {
 function createDivForAllProjects() {
   mainContainer.innerHTML += `
   <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
+  <br><br>
   </div>
   <br><br>
   `
@@ -195,6 +197,7 @@ function deleteProject(e) {
     })
   }
   fetch(`http://localhost:3000/projects/${id}`, options)
+  .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
 }
 
 function findAllProjects() {

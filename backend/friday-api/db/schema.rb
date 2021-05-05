@@ -22,14 +22,12 @@ ActiveRecord::Schema.define(version: 2021_04_28_045456) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.integer "project_id", null: false
     t.string "content"
     t.string "member_email"
     t.boolean "completed", default: false
+    t.integer "project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
-  add_foreign_key "tasks", "projects"
 end

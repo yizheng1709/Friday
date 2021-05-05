@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
     end
 
     def destroy
+        # binding.pry
         id = params[:project][:id]
         if id 
             Project.find_by_id(id).destroy 
