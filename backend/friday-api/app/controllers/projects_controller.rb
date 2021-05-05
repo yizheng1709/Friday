@@ -9,7 +9,9 @@ class ProjectsController < ApplicationController
     end
 
     def create 
+        # pry
         project = Project.create(project_params)
+        render json: project
     end
 
     private 

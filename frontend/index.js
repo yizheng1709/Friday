@@ -1,7 +1,3 @@
-function removeChildrenFromMain(){
-    Array.from(mainContainer.children).forEach(child => child.remove())
-}
-
 //generates home button that takes user back to initial page
 
 function homeButton() {
@@ -63,6 +59,7 @@ function askUserForEmail() {
 //this will be a callback that will update the task
 function updateTask(e) {
   e.preventDefault()
+  //fetch task
 }
 
 function fetchTasks(projectObjectid) {
@@ -94,6 +91,8 @@ function generateTaskHTML(taskObject) {
 
 //////////////////////////
 
+//this generates from projects index
+
 function generateProjectHTML(projectObject) {
   return `
   <span class="label-font">Project Name: </span>
@@ -102,6 +101,8 @@ function generateProjectHTML(projectObject) {
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br><br>
   `
 }
+
+//////////////////////////////
 
 function fetchAllProjects() {
   fetch("http://localhost:3000/projects")
@@ -119,29 +120,41 @@ function createDivForAllProjects() {
 
 
 function generateOneProjectHTML(projectObject){
-  document.getElementById(`project${projectObject.id}`).innerHTML += `
-  <span class="label-font" id="${projectObject.id}">Project Name: </span>
+  const id = projectObject.id
+  
+  mainContainer.innerHTML += `
+  <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
+  <span class="label-font" id="${id}">Project Name: </span>
   <span class="project-font bold">${projectObject.name}</span><br>
-  <span class="label-font" id="${projectObject.id}">Due Date: </span>
+  <span class="label-font" id="${id}">Due Date: </span>
   <span class="project-font bold">${projectObject.dueDate}</span><br>
-  <span class="label-font" id="${projectObject.id}">Supervisor: </span>
+  <span class="label-font" id="${id}">Supervisor: </span>
   <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
   <span class="label-font bold">Completed?</span><br>
   <br>
-  `
-}
-
-function findOneProject(e) {
-  removeChildrenFromMain()
-  const id = e.target.id
-  mainContainer.innerHTML += `
-  <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
   <div id="tasks-container">
   </div>
   </div>
   <br><br>
   `
+  // fetchTasks(id)
   homeButton()
+  // document.getElementById(`project${id}`).innerHTML += `
+  // <span class="label-font" id="${id}">Project Name: </span>
+  // <span class="project-font bold">${projectObject.name}</span><br>
+  // <span class="label-font" id="${id}">Due Date: </span>
+  // <span class="project-font bold">${projectObject.dueDate}</span><br>
+  // <span class="label-font" id="${id}">Supervisor: </span>
+  // <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
+  // <span class="label-font bold">Completed?</span><br>
+  // <br>
+  // `
+}
+
+function findOneProject(e) {
+  removeChildrenFromMain()
+  const id = e.target.id
+
   fetch(`http://localhost:3000/projects/${id}`)
   .then(resp => resp.json())
   // .then(resp => console.log(resp))
@@ -150,9 +163,11 @@ function findOneProject(e) {
       new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
       )
     })
-  .then(project => generateOneProjectHTML(project))
-  fetchTasks(id)
-  //assign eventListener to every task with class "task"  
+    .then(project => {
+      generateOneProjectHTML(project)
+      fetchTasks(project.id)
+    })
+
 }
 
 function findAllProjects() {
@@ -190,10 +205,10 @@ function addAnotherMemberInput() {
     const groupMembers = document.getElementById("group-members")
     groupMembers.innerHTML += `
     <br>
-    <label class="project-name label-font">Group Member</label><br><br>
-    <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member"><br><br>
+    <label class="project-name label-font">Group Member's E-mail</label><br><br>
+    <input type="text" class="creating-project-input" value=" "><br><br>
     <label class="project-name label-font">Task</label><br><br>
-    <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br>
+    <input type="text" class="creating-project-input task-input" value=" "><br>
     `
 }
 
@@ -204,20 +219,20 @@ function newProjectForm() {
           <form id="creating-project-form">
             <br>
             <label class="project-name label-font">Project Name</label><br><br>
-            <input type="text" class="creating-project-input" placeholder="Project Name"><br><br>
+            <input type="text" class="creating-project-input" value=" "><br><br>
             <label class="project-name label-font">Due Date</label><br><br>
-            <input type="date" class="creating-project-input"><br><br>
-            <label class="project-name label-font">Group Supervisor</label><br><br>
-            <input type="text" class="creating-project-input" placeholder="E-mail of Group Supervisor"><br><br>
+            <input type="date" class="creating-project-input" value="2022-05-05"><br><br>
+            <label class="project-name label-font">Group Supervisor's E-mail</label><br><br>
+            <input type="text" class="creating-project-input" value=" "><br><br>
             <div id="group-members">
-            <label class="project-name label-font">Group Member</label><br><br>
-            <input type="text" class="creating-project-input" placeholder="E-mail of Group Member"><br><br>
+            <label class="project-name label-font">Group Member's E-mail</label><br><br>
+            <input type="text" class="creating-project-input" value=" "><br><br>
             <label class="project-name label-font">Task</label><br><br>
-            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br><br>
-            <label class="project-name label-font">Group Member</label><br><br>
-            <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member"><br><br>
+            <input type="text" class="creating-project-input task-input" value=" "><br><br>
+            <label class="project-name label-font">Group Member's E-mail</label><br><br>
+            <input type="text" class="creating-project-input" value=" "><br><br>
             <label class="project-name label-font">Task</label><br><br>
-            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br>
+            <input type="text" class="creating-project-input task-input" value=" "><br>
             </div>
             <br><br>
             <input type="submit" class="initial-button bold" value="Next">
@@ -229,7 +244,7 @@ function newProjectForm() {
     homeButton()
     const creatingProjectForm = document.getElementById("creating-project-form")
     const addAnotherMember = document.getElementById("add-another-member")
-    creatingProjectForm.addEventListener("submit", submitProjectName)
+    creatingProjectForm.addEventListener("submit", submitProject)
     addAnotherMember.addEventListener("click", addAnotherMemberInput)
 }
 
@@ -251,32 +266,51 @@ function findProjectForm() {
     homeButton()
 }
 
-
-
-function submitProjectName(e) {
+function submitProject(e) {
     e.preventDefault()
-    // Array.from(e.target).forEach(ele => console.log(ele.value))
-    // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    const attributes = Array.from(e.target).slice(0, 3).map(a => a.value)
-    // {debugger}
-    let project = new Project(attributes[0], attributes[1], attributes[2])
+    //how to send all the data instead of just one or two lines?
+    //how to submit form to create tasks as well?
+    let userInput = Array.from(e.target).map(ele => ele.value)
+    let fetchObject = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        project: {name: userInput[0]} 
+      })
+    }
+    fetch("http://localhost:3000/projects", fetchObject)
+    .then(resp => resp.json())
+    .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
+    .then(generateOneProjectHTML)
+    // // Array.from(e.target).forEach(ele => console.log(ele.value))
+    // // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    // const attributes = Array.from(e.target).slice(0, 3).map(a => a.value)
+    // // console.log(e.target)
+    // let project = new Project(attributes[0], attributes[1], attributes[2])
     // console.log(project)
-    removeChildrenFromMain()
-    mainContainer.innerHTML += `
-    <div class="creating-project-div center responsive shadow">
-    <br><br>
-      <p class="search-by-name project-font">Project Name</p>
-      <p>${project.name}</p>
-      <p class="search-by-name project-font">Project Due Date</p>
-      <p>${project.dueDate}</p>
-    <br><br>
-    <form>
-    <input type="submit" class="initial-button bold" value="Edit Project" id="edit-project"> 
-    <br><br>
-    </div>
-    <br><br><br><br><br>
-    `
-    homeButton()
+    // removeChildrenFromMain()
+
+    // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
+
+    // mainContainer.innerHTML += `
+    // <div class="creating-project-div center responsive shadow">
+    // <br><br>
+    //   <p class="search-by-name project-font">Project Name</p>
+    //   <p>${project.name}</p>
+    //   <p class="search-by-name project-font">Project Due Date</p>
+    //   <p>${project.dueDate}</p>
+    // <br><br>
+    // <form>
+    // <input type="submit" class="initial-button bold" value="Edit Project" id="edit-project"> 
+    // <br><br>
+    // </div>
+    // <br><br><br><br><br>
+    // `
+    // homeButton()
+
+
     // fetch("localhost:3000/projects", {
     //     method: 'POST', 
     //     headers: {
