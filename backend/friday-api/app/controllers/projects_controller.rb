@@ -6,7 +6,6 @@ class ProjectsController < ApplicationController
     def show 
         # pry
         project = Project.find_by_id(params[:id])
-        render json: project, only: [:id, :name, :due_date, :completed], :include => {
-            :tasks => {:only => [:content, :member_email, :completed]}}
+        render json: project, only: [:id, :name, :due_date, :group_supervisor, :completed]
     end
 end

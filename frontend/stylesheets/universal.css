@@ -30,6 +30,17 @@
     cursor: pointer;
 }
 
+.small-button{
+    font-size: 15px;
+}
+
+.label-font {
+    font-family: 'Crimson Text', serif;
+    font-weight: bold;
+    font-size: 28px;
+    color: #be84f5;;
+}
+
 li {
     text-align: center;
     /* list-style-position: inside; */

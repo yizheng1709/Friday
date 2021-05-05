@@ -60,37 +60,46 @@ function askUserForEmail() {
 
 /// TASK FUNCTIONS ////
 
+//this will be a callback that will update the task
+function updateTask(e) {
+  e.preventDefault()
+}
 
 function fetchTasks(projectObjectid) {
-  const projectContainer = document.getElementById(`project${projectObjectid}`)
+  const tasksContainer = document.getElementById(`tasks-container`)
   fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
   .then(resp => resp.json())
   .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
-  .then(tasks => tasks.forEach(task => projectContainer.innerHTML += generateTaskHTML(task)))
-  // .then(tasks => console.log(tasks))
+  .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
+  
+  
+  .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
+  Array.from(document.getElementsByClassName("task")).forEach(function(task){
+    task.addEventListener("submit", updateTask)
+  })
 }
-
-
-
 
 function generateTaskHTML(taskObject) {
   return `
   <p class="task-content">${taskObject["content"]}</p>
   <li>${taskObject["memberEmail"]}</li>
-  <form id="${taskObject.id}">
+  <form class="task" id="complete-task${taskObject.id}">
   <input type="checkbox">Completed Task<br>
-  <input type="submit">
+  <input class="initial-button small-button bold" type="submit">
   </form>
   `
 }
+
 
 
 //////////////////////////
 
 function generateProjectHTML(projectObject) {
   return `
-  <p class="project-font fake-hover" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
-  <p class="project-font fake-hover" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
+  <span class="label-font">Project Name: </span>
+  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.name}</span><br>
+  <span class="label-font">Due Date: </span>
+  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br><br>
   `
 }
 
@@ -110,13 +119,11 @@ function createDivForAllProjects() {
 
 
 function generateOneProjectHTML(projectObject){
-  return `
+  document.getElementById(`project${projectObject.id}`).innerHTML += `
   <p class="project-font" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
   <p class="project-font" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
-
+  <p class="project-font" id="${projectObject.id}">Supervisor: ${projectObject.groupSupervisor}</p>
   <span class="project-font bold">Completed?</span>
-  
-  
   <br>
   `
 }
@@ -126,24 +133,23 @@ function findOneProject(e) {
   const id = e.target.id
   mainContainer.innerHTML += `
   <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
+  <div id="tasks-container">
+  </div>
   </div>
   <br><br>
   `
   homeButton()
-  const oneProjectDiv = document.getElementById(`project${id}`)
   fetch(`http://localhost:3000/projects/${id}`)
   .then(resp => resp.json())
+  // .then(resp => console.log(resp))
   .then(project => {
     return(
-      new Project(project["id"], project["name"], project["due_date"], project["completed"])
+      new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
       )
-  })
-  .then(project => oneProjectDiv.innerHTML += generateOneProjectHTML(project))
-  
+    })
+  .then(project => generateOneProjectHTML(project))
   fetchTasks(id)
-  // .then(project => oneProjectDiv.innerHTML += generateProjectHTML(project))
-  //why is this givng me cors error
-  
+  //assign eventListener to every task with class "task"  
 }
 
 function findAllProjects() {
@@ -153,12 +159,15 @@ function findAllProjects() {
   const allProjectsDiv = document.getElementById("all-projects-div")
   fetch("http://localhost:3000/projects")
   .then(resp => resp.json())
-  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["completed"])))
+  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
   .then(projects => projects.forEach(project => { 
     allProjectsDiv.innerHTML += generateProjectHTML(project)
   }))
-  .then(() => Array.from(allProjectsDiv.children).forEach(function (child) {
+  .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
     child.addEventListener("click", findOneProject)}))
+
+
+    
   // Array.from(allProjectsDiv.children).forEach(projectElement => console.log(projectElement))
   // debugger
 }
@@ -177,10 +186,11 @@ function deleteInitialAndContinue() {
 function addAnotherMemberInput() {
     const groupMembers = document.getElementById("group-members")
     groupMembers.innerHTML += `
-    <p class="project-name project-font">Group Member</p>
-    <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
-    <p class="project-name project-font">Task</p>
-    <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
+    <br>
+    <label class="project-name label-font">Group Member</label><br><br>
+    <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member"><br><br>
+    <label class="project-name label-font">Task</label><br><br>
+    <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br>
     `
 }
 
@@ -190,23 +200,23 @@ function newProjectForm() {
     <div class="creating-project-div center responsive shadow" id="creating-project-div">
           <form id="creating-project-form">
             <br>
-            <p class="project-name project-font">Project Name</p>
-            <input type="text" class="creating-project-input" placeholder="Project Name">
-            <p class="project-name project-font">Due Date</p>
-            <input type="date" class="creating-project-input">
-            <p class="project-name project-font">Group Supervisor</p>
-            <input type="text" class="creating-project-input" placeholder="E-mail of Group Supervisor">
+            <label class="project-name label-font">Project Name</label><br><br>
+            <input type="text" class="creating-project-input" placeholder="Project Name"><br><br>
+            <label class="project-name label-font">Due Date</label><br><br>
+            <input type="date" class="creating-project-input"><br><br>
+            <label class="project-name label-font">Group Supervisor</label><br><br>
+            <input type="text" class="creating-project-input" placeholder="E-mail of Group Supervisor"><br><br>
             <div id="group-members">
-            <p class="project-name project-font">Group Member</p>
-            <input type="text" class="creating-project-input" placeholder="E-mail of Group Member">
-            <p class="project-name project-font">Task</p>
-            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
-            <p class="project-name project-font">Group Member</p>
-            <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member">
-            <p class="project-name project-font">Task</p>
-            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member">
+            <label class="project-name label-font">Group Member</label><br><br>
+            <input type="text" class="creating-project-input" placeholder="E-mail of Group Member"><br><br>
+            <label class="project-name label-font">Task</label><br><br>
+            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br><br>
+            <label class="project-name label-font">Group Member</label><br><br>
+            <input type="text" class="creating-project-input" placeholder="E-Mail of Group Member"><br><br>
+            <label class="project-name label-font">Task</label><br><br>
+            <input type="text" class="creating-project-input task-input" placeholder="Task for this Group Member"><br>
             </div>
-            <br><br><br>
+            <br><br>
             <input type="submit" class="initial-button bold" value="Next">
             <br><br><br>
           </form>
@@ -238,56 +248,7 @@ function findProjectForm() {
     homeButton()
 }
 
-function createInitialContact() {
-    mainContainer.innerHTML += `
-    <div class="gallery-container" id="gallery-container">
-    <div class="slideshow-container responsive shadow center" 
-    id="initial-contact">
 
-    <div class="mySlides fade">
-      <img src="images/one.png" class="gallery-image responsive">
-    </div>
-
-    <div class="mySlides fade">
-      <img src="images/two.png" class="gallery-image responsive">
-    </div>
-
-    <div class="mySlides fade">
-      <img src="images/three.png" class="gallery-image responsive">
-    </div>
-
-    <div class="mySlides fade">
-      <img src="images/four.png" class="gallery-image responsive">
-    </div>
-
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-  </div>
-  <br>
-
-  <div id="dots" style="text-align:center" class="responsive">
-    <span class="dot" onclick="currentSlide(1)" id="first-click"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
-  </div>
-  <div class="center initial-div" id="initial-div">
-    <br><br><br>
-  <button class="initial-button" id="initial-button">
-    <strong>Continue</strong>
-  </button>
-  <br><br><br>
-  </div>
-  </div>
-  <br><br>
-  `
-}
-
-function editProject(e) {
-  //show i just add check box to confirm that a task is done?
-  e.preventDefault()
-  //how to edit?
-}
 
 function submitProjectName(e) {
     e.preventDefault()
@@ -313,7 +274,6 @@ function submitProjectName(e) {
     <br><br><br><br><br>
     `
     homeButton()
-    document.getElementById("edit-project").addEventListener("submit", editProject)
     // fetch("localhost:3000/projects", {
     //     method: 'POST', 
     //     headers: {

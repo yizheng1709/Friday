@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2021_04_28_045456) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.date "due_date"
+    t.string "group_supervisor"
     t.boolean "completed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
