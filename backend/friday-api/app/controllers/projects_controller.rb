@@ -4,8 +4,16 @@ class ProjectsController < ApplicationController
     end
 
     def show 
-        # pry
         project = Project.find_by_id(params[:id])
         render json: project, only: [:id, :name, :due_date, :group_supervisor, :completed]
+    end
+
+    def create 
+        project = Project.create(project_params)
+    end
+
+    private 
+    def project_params
+        params.require(:project).permit(:name, :group_supervisor, :due_date, :completed, :tasks_attributes => [:id, :content, :member_email, :completed])
     end
 end
