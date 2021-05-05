@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
     def index
-        # pry
         render json: Project.all, only: [:id, :name, :due_date], include: [:tasks]
     end
 
@@ -10,18 +9,22 @@ class ProjectsController < ApplicationController
     end
 
     def create 
-        
         project = Project.create(project_params)
         #AR create  method to build relationship
-        
         tasks = params[:project][:tasks]
         tasks.each_slice(2) do |content, email|
             project.tasks.create(content: content.strip, member_email: email.strip)
         end
         #iterate through params[:project][:tasks]
-            
-        
         render json: project
+    end
+
+    def destroy
+        id = params[:project][:id]
+        if id 
+            Project.find_by_id(id).destroy 
+        end
+        # binding.pry
     end
 
     private 

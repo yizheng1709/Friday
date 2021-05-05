@@ -110,7 +110,7 @@ function generateTaskHTML(taskObject) {
 
 //////////////////////////
 
-//this generates from projects index
+//this generates projects index
 
 function generateProjectHTML(projectObject) {
   return `
@@ -118,7 +118,7 @@ function generateProjectHTML(projectObject) {
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.name}</span><br>
   <span class="label-font underline">Due Date: </span>
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br>
-  <form class="delete-project bold">
+  <form class="delete-project bold" id="${projectObject.id}">
   <input class="initial-button small-button" type="submit" value="Delete Project">
   </form><br><br>
   `
@@ -126,11 +126,11 @@ function generateProjectHTML(projectObject) {
 
 //////////////////////////////
 
-function fetchAllProjects() {
-  fetch("http://localhost:3000/projects")
-  .then(resp => resp.json())
-  .then(data => data.map(project => new Project(project["name"], project["due_date"])))
-}
+// function fetchAllProjects() {
+//   fetch("http://localhost:3000/projects")
+//   .then(resp => resp.json())
+//   .then(data => data.map(project => new Project(project["name"], project["due_date"])))
+// }
 
 function createDivForAllProjects() {
   mainContainer.innerHTML += `
@@ -181,6 +181,22 @@ function findOneProject(e) {
 
 }
 
+function deleteProject(e) {
+  //should also remove the element with the id
+  e.preventDefault()
+  const id = e.target.id
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      project: {id: id}
+    })
+  }
+  fetch(`http://localhost:3000/projects/${id}`, options)
+}
+
 function findAllProjects() {
   removeChildrenFromMain()
   createDivForAllProjects()
@@ -194,6 +210,9 @@ function findAllProjects() {
   }))
   .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
     child.addEventListener("click", findOneProject)}))
+  .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
+    child.addEventListener("submit", deleteProject)
+    }))
 
 
     
@@ -297,20 +316,13 @@ function submitProject(e) {
     //send data to backend
     fetch("http://localhost:3000/projects", fetchObject)
     .then(resp => resp.json())
-  
-  
     .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
     .then(project => {
       removeChildrenFromMain()
       generateOneProjectHTML(project)
       fetchTasks(project.id)
     })
-    
-
     // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
-
-
-
 }
 
 function goBackToInitial() {
