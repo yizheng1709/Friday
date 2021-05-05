@@ -117,7 +117,10 @@ function generateProjectHTML(projectObject) {
   <span class="label-font underline">Project Name: </span>
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.name}</span><br>
   <span class="label-font underline">Due Date: </span>
-  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br><br>
+  <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br>
+  <form class="delete-project bold">
+  <input class="initial-button small-button" type="submit" value="Delete Project">
+  </form><br><br>
   `
 }
 
@@ -294,7 +297,7 @@ function submitProject(e) {
     //send data to backend
     fetch("http://localhost:3000/projects", fetchObject)
     .then(resp => resp.json())
-    // .then(resp=>console.log(resp))
+  
   
     .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
     .then(project => {
@@ -302,7 +305,7 @@ function submitProject(e) {
       generateOneProjectHTML(project)
       fetchTasks(project.id)
     })
-    // .then(() => removeChildrenFromMain)
+    
 
     // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
 
