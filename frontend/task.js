@@ -1,8 +1,9 @@
 class Task{
-    constructor(projectID, content, completed, memberEmail) {
+    constructor(projectID, content, memberEmail, completed, id) {
         this.projectID = projectID
         this.content = content 
-        this.completed = completed 
         this.memberEmail = memberEmail
+        this.completed = completed 
+        this.id = id
     }
 }

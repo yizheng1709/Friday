@@ -62,10 +62,10 @@ function askUserForEmail() {
 
 
 function fetchTasks(projectObjectid) {
-  const projectContainer = document.getElementById(`${projectObjectid}`)
+  const projectContainer = document.getElementById(`project${projectObjectid}`)
   fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
   .then(resp => resp.json())
-  .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"])))
+  .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
   .then(tasks => tasks.forEach(task => projectContainer.innerHTML += generateTaskHTML(task)))
   // .then(tasks => console.log(tasks))
 }
@@ -77,6 +77,10 @@ function generateTaskHTML(taskObject) {
   return `
   <p class="task-content">${taskObject["content"]}</p>
   <li>${taskObject["memberEmail"]}</li>
+  <form id="${taskObject.id}">
+  <input type="checkbox">Completed Task<br>
+  <input type="submit">
+  </form>
   `
 }
 
@@ -109,10 +113,10 @@ function generateOneProjectHTML(projectObject){
   return `
   <p class="project-font" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
   <p class="project-font" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
-  <form id="completed-project">
-  <input type="checkbox"> <span class="project-font bold">Completed?</span><br><br>
-  <input class="initial-button bold" type="submit" value="Submit Changes">
-  </form>
+
+  <span class="project-font bold">Completed?</span>
+  
+  
   <br>
   `
 }
@@ -121,12 +125,12 @@ function findOneProject(e) {
   removeChildrenFromMain()
   const id = e.target.id
   mainContainer.innerHTML += `
-  <div class="shadow center responsive creating-project-div all-projects-div" id="${id}">
+  <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
   </div>
   <br><br>
   `
   homeButton()
-  const oneProjectDiv = document.getElementById(`${id}`)
+  const oneProjectDiv = document.getElementById(`project${id}`)
   fetch(`http://localhost:3000/projects/${id}`)
   .then(resp => resp.json())
   .then(project => {
