@@ -120,10 +120,13 @@ function createDivForAllProjects() {
 
 function generateOneProjectHTML(projectObject){
   document.getElementById(`project${projectObject.id}`).innerHTML += `
-  <p class="project-font" id="${projectObject.id}">Project Name: ${projectObject.name}</p>
-  <p class="project-font" id="${projectObject.id}">Due Date: ${projectObject.dueDate}</p>
-  <p class="project-font" id="${projectObject.id}">Supervisor: ${projectObject.groupSupervisor}</p>
-  <span class="project-font bold">Completed?</span>
+  <span class="label-font" id="${projectObject.id}">Project Name: </span>
+  <span class="project-font bold">${projectObject.name}</span><br>
+  <span class="label-font" id="${projectObject.id}">Due Date: </span>
+  <span class="project-font bold">${projectObject.dueDate}</span><br>
+  <span class="label-font" id="${projectObject.id}">Supervisor: </span>
+  <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
+  <span class="label-font bold">Completed?</span><br>
   <br>
   `
 }
