@@ -115,13 +115,14 @@ function generateTaskHTML(taskObject) {
 function generateProjectHTML(projectObject) {
   const id = projectObject.id
   return `
-  <span class="label-font underline project${id}">Project Name: </span>
+
+  <span class="label-font underline project${id}"><br>Project Name: </span>
   <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
   <span class="label-font underline project${id}">Due Date: </span>
   <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
   <form class="delete-project bold project${id}" id="${id}">
   <input class="initial-button small-button " type="submit" value="Delete Project">
-  </form><br><br>
+  <br></form>
   `
 }
 
@@ -130,7 +131,7 @@ function generateProjectHTML(projectObject) {
 function createDivForAllProjects() {
   mainContainer.innerHTML += `
   <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
-  <br><br>
+  
   </div>
   <br><br>
   `
@@ -173,6 +174,7 @@ function findOneProject(e) {
       generateOneProjectHTML(project)
       fetchTasks(project.id)
     })
+    .catch(() => alert("There was an error finding the project! Please try again."))
 
 }
 
@@ -190,6 +192,7 @@ function deleteProject(e) {
   }
   fetch(`http://localhost:3000/projects/${id}`, options)
   .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+  .catch(() => alert("There was an error deleting the project! Please try again."))
 }
 
 function findAllProjects() {
@@ -208,6 +211,7 @@ function findAllProjects() {
   .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
     child.addEventListener("submit", deleteProject)
     }))
+    .catch(() => alert("There was an error finding all the projects! Please try again."))
 
 }
 
@@ -332,6 +336,7 @@ function submitProject(e) {
       generateOneProjectHTML(project)
       fetchTasks(project.id)
     })
+    .catch(() => alert("There was an error saving the project! Please try again."))
     // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
 }
 
