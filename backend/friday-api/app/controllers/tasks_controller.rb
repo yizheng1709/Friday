@@ -9,8 +9,10 @@ class TasksController < ApplicationController
     end
 
     def update
+        # pry
         task = Task.find_by_id(params[:id])
-        task.completed.toggle
+        task.completed = params[:completed]["checkmark"]
         task.save 
+        # render json: task, only: [:project_id, :content, :member_email, :completed, :id]
     end
 end

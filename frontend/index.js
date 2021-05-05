@@ -59,7 +59,19 @@ function askUserForEmail() {
 //this will be a callback that will update the task
 function updateTask(e) {
   e.preventDefault()
+  const id = e.target.id.split("complete-task")[1]
+  let checkmark = e.target[0].checked
+  let options = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      completed: {checkmark}
+    })
+  }
   //fetch task
+  fetch(`http:localhost:3000/tasks/${id}`, options)
 }
 
 function fetchTasks(projectObjectid) {
@@ -71,9 +83,16 @@ function fetchTasks(projectObjectid) {
   
   
   .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
-  Array.from(document.getElementsByClassName("task")).forEach(function(task){
+  // .then(resp => {debugger})
+  .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
     task.addEventListener("submit", updateTask)
-  })
+  }))
+}
+
+function checkBox(taskObject) {
+  if (taskObject.completed) {
+    return "checked"
+  }
 }
 
 function generateTaskHTML(taskObject) {
@@ -81,7 +100,7 @@ function generateTaskHTML(taskObject) {
   <p class="task-content">${taskObject["content"]}</p>
   <li>${taskObject["memberEmail"]}</li>
   <form class="task" id="complete-task${taskObject.id}">
-  <input type="checkbox">Completed Task<br>
+  <input name="completed" type="checkbox" ${checkBox(taskObject)}>Completed Task<br>
   <input class="initial-button small-button bold" type="submit">
   </form>
   `
@@ -271,13 +290,16 @@ function submitProject(e) {
     //how to send all the data instead of just one or two lines?
     //how to submit form to create tasks as well?
     let userInput = Array.from(e.target).map(ele => ele.value)
+    let tasks = userInput.slice(3, userInput.length-1)
+    console.log(tasks)
+    //need every two elements to be an object
     let fetchObject = {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        project: {name: userInput[0]} 
+        project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2]} 
       })
     }
     fetch("http://localhost:3000/projects", fetchObject)

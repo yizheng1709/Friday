@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
     def index
+        # pry
         render json: Project.all, only: [:id, :name, :due_date], include: [:tasks]
     end
 
