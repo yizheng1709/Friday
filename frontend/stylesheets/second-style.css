@@ -39,3 +39,8 @@
     font-size: 22px;
     font-weight: bold;
 }
+
+.check {
+    color: rgb(77, 77, 255);
+    font-family: 'Crimson Text', serif;
+}

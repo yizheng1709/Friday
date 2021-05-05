@@ -10,13 +10,22 @@ class ProjectsController < ApplicationController
     end
 
     def create 
-        # pry
+        
         project = Project.create(project_params)
+        #AR create  method to build relationship
+        
+        tasks = params[:project][:tasks]
+        tasks.each_slice(2) do |content, email|
+            project.tasks.create(content: content.strip, member_email: email.strip)
+        end
+        #iterate through params[:project][:tasks]
+            
+        
         render json: project
     end
 
     private 
     def project_params
-        params.require(:project).permit(:name, :group_supervisor, :due_date, :completed, :tasks_attributes => [:id, :content, :member_email, :completed])
+        params.require(:project).permit(:name, :group_supervisor, :due_date, :completed)
     end
 end

@@ -8,6 +8,10 @@ class TasksController < ApplicationController
         end 
     end
 
+    def create 
+        
+    end
+
     def update
         # pry
         task = Task.find_by_id(params[:id])

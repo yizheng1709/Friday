@@ -98,9 +98,9 @@ function checkBox(taskObject) {
 function generateTaskHTML(taskObject) {
   return `
   <p class="task-content">${taskObject["content"]}</p>
-  <li>${taskObject["memberEmail"]}</li>
+  <span class="assigned">assigned to: ${taskObject["memberEmail"]}</span><br>
   <form class="task" id="complete-task${taskObject.id}">
-  <input name="completed" type="checkbox" ${checkBox(taskObject)}>Completed Task<br>
+  <input name="completed" type="checkbox" ${checkBox(taskObject)}><span class="check">Completed Task</span><br>
   <input class="initial-button small-button bold" type="submit">
   </form>
   `
@@ -114,9 +114,9 @@ function generateTaskHTML(taskObject) {
 
 function generateProjectHTML(projectObject) {
   return `
-  <span class="label-font">Project Name: </span>
+  <span class="label-font underline">Project Name: </span>
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.name}</span><br>
-  <span class="label-font">Due Date: </span>
+  <span class="label-font underline">Due Date: </span>
   <span class="project-font fake-hover show-project" id="${projectObject.id}">${projectObject.dueDate}</span><br><br>
   `
 }
@@ -143,31 +143,20 @@ function generateOneProjectHTML(projectObject){
   
   mainContainer.innerHTML += `
   <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
-  <span class="label-font" id="${id}">Project Name: </span>
+  <span class="label-font underline" id="${id}">Project Name</span><br>
   <span class="project-font bold">${projectObject.name}</span><br>
-  <span class="label-font" id="${id}">Due Date: </span>
+  <span class="label-font underline" id="${id}">Due Date</span><br>
   <span class="project-font bold">${projectObject.dueDate}</span><br>
-  <span class="label-font" id="${id}">Supervisor: </span>
+  <span class="label-font underline" id="${id}">Supervisor</span><br>
   <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
-  <span class="label-font bold">Completed?</span><br>
+
   <br>
   <div id="tasks-container">
   </div>
   </div>
   <br><br>
   `
-  // fetchTasks(id)
   homeButton()
-  // document.getElementById(`project${id}`).innerHTML += `
-  // <span class="label-font" id="${id}">Project Name: </span>
-  // <span class="project-font bold">${projectObject.name}</span><br>
-  // <span class="label-font" id="${id}">Due Date: </span>
-  // <span class="project-font bold">${projectObject.dueDate}</span><br>
-  // <span class="label-font" id="${id}">Supervisor: </span>
-  // <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
-  // <span class="label-font bold">Completed?</span><br>
-  // <br>
-  // `
 }
 
 function findOneProject(e) {
@@ -287,11 +276,10 @@ function findProjectForm() {
 
 function submitProject(e) {
     e.preventDefault()
-    //how to send all the data instead of just one or two lines?
-    //how to submit form to create tasks as well?
+ 
     let userInput = Array.from(e.target).map(ele => ele.value)
     let tasks = userInput.slice(3, userInput.length-1)
-    console.log(tasks)
+    
     //need every two elements to be an object
     let fetchObject = {
       method: "POST",
@@ -299,55 +287,27 @@ function submitProject(e) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2]} 
+        project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2], tasks: tasks} 
       })
     }
+
+    //send data to backend
     fetch("http://localhost:3000/projects", fetchObject)
     .then(resp => resp.json())
+    // .then(resp=>console.log(resp))
+  
     .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
-    .then(generateOneProjectHTML)
-    // // Array.from(e.target).forEach(ele => console.log(ele.value))
-    // // need to send this back ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    // const attributes = Array.from(e.target).slice(0, 3).map(a => a.value)
-    // // console.log(e.target)
-    // let project = new Project(attributes[0], attributes[1], attributes[2])
-    // console.log(project)
-    // removeChildrenFromMain()
+    .then(project => {
+      removeChildrenFromMain()
+      generateOneProjectHTML(project)
+      fetchTasks(project.id)
+    })
+    // .then(() => removeChildrenFromMain)
 
     // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
 
-    // mainContainer.innerHTML += `
-    // <div class="creating-project-div center responsive shadow">
-    // <br><br>
-    //   <p class="search-by-name project-font">Project Name</p>
-    //   <p>${project.name}</p>
-    //   <p class="search-by-name project-font">Project Due Date</p>
-    //   <p>${project.dueDate}</p>
-    // <br><br>
-    // <form>
-    // <input type="submit" class="initial-button bold" value="Edit Project" id="edit-project"> 
-    // <br><br>
-    // </div>
-    // <br><br><br><br><br>
-    // `
-    // homeButton()
 
 
-    // fetch("localhost:3000/projects", {
-    //     method: 'POST', 
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-    //   .then(response => response.json())
-    // //   .then(data => {
-    // //     console.log('Success:', data);
-    // //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   })
-    // console.log(e)
 }
 
 function goBackToInitial() {
