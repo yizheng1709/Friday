@@ -77,7 +77,13 @@ function updateTask(e) {
 function fetchTasks(projectObjectid) {
   const tasksContainer = document.getElementById(`tasks-container`)
   fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
-  .then(resp => resp.json())
+  .then(resp => { 
+    if (resp.ok){
+    return resp.json()
+  }else {
+    alert("There was an error finding the tasks! Please try again.")
+  }
+  })
   .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
   .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
   
@@ -87,6 +93,7 @@ function fetchTasks(projectObjectid) {
   .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
     task.addEventListener("submit", updateTask)
   }))
+  .catch(() => alert("There was an error finding the tasks! Please try again."))
 }
 
 function checkBox(taskObject) {
@@ -164,7 +171,14 @@ function findOneProject(e) {
   const id = e.target.id
 
   fetch(`http://localhost:3000/projects/${id}`)
-  .then(resp => resp.json())
+  .then(resp => { 
+    if (resp.ok){
+    return resp.json()
+  }else {
+    alert("There was an error finding the project! Please try again.")
+  }
+
+  })
   .then(project => {
     return(
       new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
@@ -201,7 +215,13 @@ function findAllProjects() {
   homeButton()
   const allProjectsDiv = document.getElementById("all-projects-div")
   fetch("http://localhost:3000/projects")
-  .then(resp => resp.json())
+  .then(resp => { 
+    if (resp.ok){
+    return resp.json()
+  }else {
+    alert("There was an error finding all the projects! Please try again.")
+  }
+  })
   .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
   .then(projects => projects.forEach(project => { 
     allProjectsDiv.innerHTML += generateProjectHTML(project)
@@ -218,7 +238,7 @@ function findAllProjects() {
 function deleteInitialAndContinue() {
     removeChildrenFromMain()
     findOrCreateProjectDiv()
-    const findProjectButton = document.getElementById("find-project-button")
+    // const findProjectButton = document.getElementById("find-project-button")
     const createNewProjectButton = document.getElementById("create-new-project-button")
     const findAllProjectsButton = document.getElementById("all-projects-button")
     // findProjectButton.addEventListener("click", findProjectForm)
@@ -329,7 +349,13 @@ function submitProject(e) {
 
     //send data to backend
     fetch("http://localhost:3000/projects", fetchObject)
-    .then(resp => resp.json())
+    .then(resp => { 
+      if (resp.ok){
+      return resp.json()
+    }else {
+      alert("There was an error submitting the project! Please try again.")
+    }
+    })
     .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
     .then(project => {
       removeChildrenFromMain()
