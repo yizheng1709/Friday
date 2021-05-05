@@ -42,15 +42,6 @@
     color: #e065ff;;
 }
 
-.assigned {
-    /* text-decoration: none; */
-    text-align: center;
-    /* list-style-position: inside; */
-    color: #9169ff;
-    font-family: 'Crimson Text', serif;
-    font-size: 19px;
-    font-weight: bold;
-}
 
 .underline {
     text-decoration: underline;
