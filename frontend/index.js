@@ -24,16 +24,16 @@ function findOrCreateProjectDiv() {
     <button class="initial-button" id="create-new-project-button">
       <strong>Create New Project</strong>
     </button><br><br>
-    <button class="initial-button" id="find-project-button">
-      <strong>Find a Project</strong>
-    </button>
-    <br><br>
     <button class="initial-button" id="all-projects-button">
-      <strong>All Projects</strong>
+    <strong>All Projects</strong>
     </button>
     <br><br>
-  </div><br><br><br>`
+    </div><br><br><br>`
   homeButton()
+    // <button class="initial-button" id="find-project-button">
+    //   <strong>Find a Project</strong>
+    // </button>
+    // <br><br>
 }
 
 function askUserForEmail() {
@@ -217,7 +217,7 @@ function deleteInitialAndContinue() {
     const findProjectButton = document.getElementById("find-project-button")
     const createNewProjectButton = document.getElementById("create-new-project-button")
     const findAllProjectsButton = document.getElementById("all-projects-button")
-    findProjectButton.addEventListener("click", findProjectForm)
+    // findProjectButton.addEventListener("click", findProjectForm)
     createNewProjectButton.addEventListener("click", askUserForEmail)
     findAllProjectsButton.addEventListener("click", findAllProjects)
 }
@@ -269,42 +269,42 @@ function newProjectForm() {
     addAnotherMember.addEventListener("click", addAnotherMemberInput)
 }
 
-function findProjectBackend(e) {
-  debugger
-  e.preventDefault()
-  console.log(e.target)
-}
+// function findProjectBackend(e) {
+//   debugger
+//   e.preventDefault()
+//   console.log(e.target)
+// }
 
-function findProjectForm() {
-    removeChildrenFromMain()
-    mainContainer.innerHTML += `
-        <div class="find-project responsive shadow center" id="find-project">
-          <br>
-          <p class="search-by-name label-font underline" id="search-by-name">
-            <strong>Searc<span class="small-space"> </span>h Project by Name</strong>
-          </p>
-          <form id="find-project-form">
-          <input type="search" class="project-input" placeholder="Name of Project">
-          <br><br><br>
-          <input type="submit" class="initial-button bold" value="Find Project">
-          </form>
-          <br><br><br>
-        </div><br><br><br>`
-    const form = document.getElementById("find-project-form")
-    form.addEventListener("submit", findProjectBackend)
+// function findProjectForm() {
+//     removeChildrenFromMain()
+//     mainContainer.innerHTML += `
+//         <div class="find-project responsive shadow center" id="find-project">
+//           <br>
+//           <p class="search-by-name label-font underline" id="search-by-name">
+//             <strong>Searc<span class="small-space"> </span>h Project by Name</strong>
+//           </p>
+//           <form id="find-project-form">
+//           <input type="search" class="project-input" placeholder="Name of Project">
+//           <br><br><br>
+//           <input type="submit" class="initial-button bold" value="Find Project">
+//           </form>
+//           <br><br><br>
+//         </div><br><br><br>`
+//     const form = document.getElementById("find-project-form")
+//     form.addEventListener("submit", findProjectBackend)
 
-    //   const options = {
-    //     headers = {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //       project: {name: e.target[0]}
-    //     })
-    //   }
-    //   fetch("http://localhost:3000/search")
+//     //   const options = {
+//     //     headers = {
+//     //       "Content-Type": "application/json"
+//     //     },
+//     //     body: JSON.stringify({
+//     //       project: {name: e.target[0]}
+//     //     })
+//     //   }
+//     //   fetch("http://localhost:3000/search")
   
-    homeButton()
-}
+//     homeButton()
+// }
 
 function submitProject(e) {
     e.preventDefault()
