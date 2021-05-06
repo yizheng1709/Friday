@@ -119,10 +119,10 @@ logo.addEventListener("click", goBackToInitial)
 // .catch(() => alert("There was an error finding the tasks! Please try again."))
 // }
 
-function checkBox(taskObject) {
-if (taskObject.completed) {
-  return "checked"
-}}
+// function checkBox(taskObject) {
+// if (taskObject.completed) {
+//   return "checked"
+// }}
 
 // function generateTaskHTML(taskObject) {
 // return `
