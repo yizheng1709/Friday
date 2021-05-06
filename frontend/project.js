@@ -83,13 +83,39 @@ class Project {
           allProjectsDiv.innerHTML += project.generateProjectHTML()
         }))
         .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
-          child.addEventListener("click", findOneProject)}))
+          child.addEventListener("click", Project.findOneProject)}))
         .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
           child.addEventListener("submit", Project.deleteProject)
           }))
         .catch(() => alert("There was an error finding all the projects! Please try again."))
         
         }
+
+        static findOneProject(e) {
+            removeChildrenFromMain()
+            const id = e.target.id
+          
+            fetch(`http://localhost:3000/projects/${id}`)
+            .then(resp => { 
+              if (resp.ok){
+              return resp.json()
+            }else {
+              alert("There was an error finding the project! Please try again.")
+            }
+          
+            })
+            .then(project => {
+              return(
+                new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
+              )
+            })
+            .then(project => {
+              project.generateOneProjectHTML()
+              project.fetchTasks()
+            })
+            .catch(() => alert("There was an error finding the project! Please try again."))
+          
+          }
 
         static submitProject(e) {
             e.preventDefault()
@@ -160,7 +186,7 @@ class Project {
         }
         })
         .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
-        .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
+        .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += task.generateTaskHTML()))
         
         
         .then(document.getElementById(`project${this.id}`).append(tasksContainer))

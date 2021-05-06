@@ -52,6 +52,29 @@ function askUserForEmail() {
   document.getElementById("received-user-email").addEventListener("click", Project.newProjectForm)
 }
 
+function deleteInitialAndContinue() {
+  removeChildrenFromMain()
+  findOrCreateProjectDiv()
+  // const findProjectButton = document.getElementById("find-project-button")
+  const createNewProjectButton = document.getElementById("create-new-project-button")
+  const findAllProjectsButton = document.getElementById("all-projects-button")
+  // findProjectButton.addEventListener("click", findProjectForm)
+  createNewProjectButton.addEventListener("click", askUserForEmail)
+  findAllProjectsButton.addEventListener("click", Project.findAllProjects)
+}
+
+function goBackToInitial() {
+  removeChildrenFromMain()
+  createInitialContact()
+  document.getElementById("first-click").click()
+  const initialButton = document.getElementById("initial-button")
+  initialButton.addEventListener("click", deleteInitialAndContinue)
+  
+}
+
+initialButton.addEventListener("click", deleteInitialAndContinue)
+logo.addEventListener("click", goBackToInitial)
+
 ////////////////////////
 
 /// TASK FUNCTIONS ////
@@ -101,16 +124,16 @@ if (taskObject.completed) {
   return "checked"
 }}
 
-function generateTaskHTML(taskObject) {
-return `
-<p class="task-content">${taskObject["content"]}</p>
-<span class="assigned">assigned to: ${taskObject["memberEmail"]}</span><br>
-<form class="task" id="complete-task${taskObject.id}">
-<input name="completed" type="checkbox" ${checkBox(taskObject)}><span class="check">Completed Task</span><br>
-<input class="initial-button small-button bold" type="submit">
-</form>
-`
-}
+// function generateTaskHTML(taskObject) {
+// return `
+// <p class="task-content">${taskObject["content"]}</p>
+// <span class="assigned">assigned to: ${taskObject["memberEmail"]}</span><br>
+// <form class="task" id="complete-task${taskObject.id}">
+// <input name="completed" type="checkbox" ${checkBox(taskObject)}><span class="check">Completed Task</span><br>
+// <input class="initial-button small-button bold" type="submit">
+// </form>
+// `
+// }
 
 
 
@@ -163,31 +186,31 @@ return `
 // homeButton()
 // }
 
-function findOneProject(e) {
-removeChildrenFromMain()
-const id = e.target.id
+// function findOneProject(e) {
+//   removeChildrenFromMain()
+//   const id = e.target.id
 
-fetch(`http://localhost:3000/projects/${id}`)
-.then(resp => { 
-  if (resp.ok){
-  return resp.json()
-}else {
-  alert("There was an error finding the project! Please try again.")
-}
+//   fetch(`http://localhost:3000/projects/${id}`)
+//   .then(resp => { 
+//     if (resp.ok){
+//     return resp.json()
+//   }else {
+//     alert("There was an error finding the project! Please try again.")
+//   }
 
-})
-.then(project => {
-  return(
-    new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
-    )
-  })
-  .then(project => {
-    project.generateOneProjectHTML()
-    project.fetchTasks()
-  })
-  .catch(() => alert("There was an error finding the project! Please try again."))
+//   })
+//   .then(project => {
+//     return(
+//       new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
+//     )
+//   })
+//   .then(project => {
+//     project.generateOneProjectHTML()
+//     project.fetchTasks()
+//   })
+//   .catch(() => alert("There was an error finding the project! Please try again."))
 
-}
+// }
 
 // function deleteProject(e) {
 // e.preventDefault()
@@ -232,16 +255,6 @@ fetch(`http://localhost:3000/projects/${id}`)
 
 // }
 
-function deleteInitialAndContinue() {
-  removeChildrenFromMain()
-  findOrCreateProjectDiv()
-  // const findProjectButton = document.getElementById("find-project-button")
-  const createNewProjectButton = document.getElementById("create-new-project-button")
-  const findAllProjectsButton = document.getElementById("all-projects-button")
-  // findProjectButton.addEventListener("click", findProjectForm)
-  createNewProjectButton.addEventListener("click", askUserForEmail)
-  findAllProjectsButton.addEventListener("click", Project.findAllProjects)
-}
 
 // function addAnotherMemberInput() {
 //   const groupMembers = document.getElementById("group-members")
@@ -363,14 +376,3 @@ function deleteInitialAndContinue() {
 //   // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
 // }
 
-function goBackToInitial() {
-  removeChildrenFromMain()
-  createInitialContact()
-  document.getElementById("first-click").click()
-  const initialButton = document.getElementById("initial-button")
-  initialButton.addEventListener("click", deleteInitialAndContinue)
-  
-}
-
-initialButton.addEventListener("click", deleteInitialAndContinue)
-logo.addEventListener("click", goBackToInitial)
