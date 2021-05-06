@@ -2,7 +2,13 @@
 
 ![Alt text](frontend/images/fridaybanner.gif?raw=true "Friday Banner")
 
-Group projects can be stressful but they wouldn't be if you're only responsible for your own tasks. Enter Friday, a single page application that helps the user track their group projects. Friday allows the user to enter the e-mail of a supervisor of the group project in addition to the e-mails and tasks of each group member.
+Group projects can be stressful but they wouldn't be if you're only responsible for your own tasks. 
+
+![Alt text](frontend/images/image-gallery.gif?raw=true "Friday Banner")
+
+Enter Friday, a single page application that helps the user track their group projects. Friday allows the user to enter the e-mail of a supervisor of the group project in addition to the e-mails and tasks of each group member.
+
+![Alt text](frontend/images/site-features.gif?raw=true "Friday Banner")
 
 ### Prerequisites & Installing
 
@@ -29,3 +35,6 @@ Run the API with:
 ```
 rails s
 ```
+
+## Authors
+ - [Eva Yi Zheng](https://github.com/yizheng1709)
