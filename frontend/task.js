@@ -23,6 +23,7 @@ class Task{
         }
         //fetch task
         fetch(`http:localhost:3000/tasks/${id}`, options)
+        .catch( () => alert("There was an error completing the task. Please try again."))
     }
      
     //instance  methods
