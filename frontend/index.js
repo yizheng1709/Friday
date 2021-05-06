@@ -133,14 +133,14 @@ return `
 
 //////////////////////////////
 
-function createDivForAllProjects() {
-mainContainer.innerHTML += `
-<div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
+// function createDivForAllProjects() {
+// mainContainer.innerHTML += `
+// <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
 
-</div>
-<br><br>
-`
-}
+// </div>
+// <br><br>
+// `
+// }
 
 
 function generateOneProjectHTML(projectObject){

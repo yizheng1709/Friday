@@ -8,6 +8,16 @@ class Project {
         this.tasks = tasks
     }
 
+    static createDivForAllProjects() {
+        mainContainer.innerHTML += `
+        <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
+        
+        </div>
+        <br><br>
+        `
+        }
+        
+
     static addAnotherMemberInput() {
         const groupMembers = document.getElementById("group-members")
         groupMembers.innerHTML += `
@@ -57,7 +67,7 @@ class Project {
 
       static findAllProjects() {
         removeChildrenFromMain()
-        createDivForAllProjects()
+        Project.createDivForAllProjects()
         homeButton()
         const allProjectsDiv = document.getElementById("all-projects-div")
         fetch("http://localhost:3000/projects")
