@@ -80,7 +80,7 @@ class Project {
         })
         .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
         .then(projects => projects.forEach(project => { 
-          allProjectsDiv.innerHTML += generateProjectHTML(project)
+          allProjectsDiv.innerHTML += project.generateProjectHTML()
         }))
         .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
           child.addEventListener("click", findOneProject)}))
@@ -171,6 +171,19 @@ class Project {
         `
         homeButton()
     }
+
+    generateProjectHTML() {
+        const id = this.id
+        return `
+        <span class="label-font underline project${id}"><br>Project Name: </span>
+        <span class="project-font fake-hover show-project project${id}" id="${id}">${this.name}</span><br>
+        <span class="label-font underline project${id}">Due Date: </span>
+        <span class="project-font fake-hover show-project project${id}" id="${id}">${this.dueDate}</span><br>
+        <form class="delete-project bold project${id}" id="${id}">
+        <input class="initial-button small-button " type="submit" value="Delete Project">
+        <br></form>
+        `
+        }
 }
 
 

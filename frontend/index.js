@@ -118,18 +118,18 @@ return `
 
 //this generates projects index
 
-function generateProjectHTML(projectObject) {
-const id = projectObject.id
-return `
-<span class="label-font underline project${id}"><br>Project Name: </span>
-<span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
-<span class="label-font underline project${id}">Due Date: </span>
-<span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
-<form class="delete-project bold project${id}" id="${id}">
-<input class="initial-button small-button " type="submit" value="Delete Project">
-<br></form>
-`
-}
+// function generateProjectHTML(projectObject) {
+// const id = projectObject.id
+// return `
+// <span class="label-font underline project${id}"><br>Project Name: </span>
+// <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
+// <span class="label-font underline project${id}">Due Date: </span>
+// <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
+// <form class="delete-project bold project${id}" id="${id}">
+// <input class="initial-button small-button " type="submit" value="Delete Project">
+// <br></form>
+// `
+// }
 
 //////////////////////////////
 
