@@ -1,15 +1,15 @@
 //generates home button that takes user back to initial page
 
 function homeButton() {
-    mainContainer.innerHTML += `
-    <div class="center responsive">
-    <button class="initial-button bold" id="home-button">
-    Back to Home
-    </button>
-    </div>
-    <br><br><br><br><br>
-    `
-    document.getElementById("home-button").addEventListener("click", goBackToInitial)
+  mainContainer.innerHTML += `
+  <div class="center responsive">
+  <button class="initial-button bold" id="home-button">
+  Back to Home
+  </button>
+  </div>
+  <br><br><br><br><br>
+  `
+  document.getElementById("home-button").addEventListener("click", goBackToInitial)
 }
 
 /////////////////////////////////////////////////////////////////
@@ -18,38 +18,38 @@ function homeButton() {
 /// another button to create project
 
 function findOrCreateProjectDiv() {
-    mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
-    id="find-or-create-project">
-    <br>
-    <button class="initial-button" id="create-new-project-button">
-      <strong>Create New Project</strong>
-    </button><br><br>
-    <button class="initial-button" id="all-projects-button">
-    <strong>All Projects</strong>
-    </button>
-    <br><br>
-    </div><br><br><br>`
-  homeButton()
-    // <button class="initial-button" id="find-project-button">
-    //   <strong>Find a Project</strong>
-    // </button>
-    // <br><br>
+  mainContainer.innerHTML += `<div class="find-or-create-project responsive shadow center" 
+  id="find-or-create-project">
+  <br>
+  <button class="initial-button" id="create-new-project-button">
+    <strong>Create New Project</strong>
+  </button><br><br>
+  <button class="initial-button" id="all-projects-button">
+  <strong>All Projects</strong>
+  </button>
+  <br><br>
+  </div><br><br><br>`
+homeButton()
+  // <button class="initial-button" id="find-project-button">
+  //   <strong>Find a Project</strong>
+  // </button>
+  // <br><br>
 }
 
 function askUserForEmail() {
-    removeChildrenFromMain()
-    mainContainer.innerHTML += `
-    <div class="responsive center shadow find-or-create-project" id="ask-user-email">
-    <br><br>
-        <p class="project-name project-font">Please enter your name:</p>
-        <input type="text" class="creating-project-input" placeholder="Name">
-        <br><br><br>
-        <button class="initial-button bold" id="received-user-email">Next</button>
-        <br><br>
-    </div><br><br><br>
-    `
-    homeButton()
-    document.getElementById("received-user-email").addEventListener("click", newProjectForm)
+  removeChildrenFromMain()
+  mainContainer.innerHTML += `
+  <div class="responsive center shadow find-or-create-project" id="ask-user-email">
+  <br><br>
+      <p class="project-name project-font">Please enter your name:</p>
+      <input type="text" class="creating-project-input" placeholder="Name">
+      <br><br><br>
+      <button class="initial-button bold" id="received-user-email">Next</button>
+      <br><br>
+  </div><br><br><br>
+  `
+  homeButton()
+  document.getElementById("received-user-email").addEventListener("click", newProjectForm)
 }
 
 ////////////////////////
@@ -58,59 +58,59 @@ function askUserForEmail() {
 
 //this will be a callback that will update the task
 function updateTask(e) {
-  e.preventDefault()
-  const id = e.target.id.split("complete-task")[1]
-  let checkmark = e.target[0].checked
-  let options = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      completed: {checkmark}
-    })
-  }
-  //fetch task
-  fetch(`http:localhost:3000/tasks/${id}`, options)
+e.preventDefault()
+const id = e.target.id.split("complete-task")[1]
+let checkmark = e.target[0].checked
+let options = {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    completed: {checkmark}
+  })
+}
+//fetch task
+fetch(`http:localhost:3000/tasks/${id}`, options)
 }
 
 function fetchTasks(projectObjectid) {
-  const tasksContainer = document.getElementById(`tasks-container`)
-  fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
-  .then(resp => { 
-    if (resp.ok){
-    return resp.json()
-  }else {
-    alert("There was an error finding the tasks! Please try again.")
-  }
-  })
-  .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
-  .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
-  
-  
-  .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
+const tasksContainer = document.getElementById(`tasks-container`)
+fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
+.then(resp => { 
+  if (resp.ok){
+  return resp.json()
+}else {
+  alert("There was an error finding the tasks! Please try again.")
+}
+})
+.then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
+.then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
 
-  .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
-    task.addEventListener("submit", updateTask)
-  }))
-  .catch(() => alert("There was an error finding the tasks! Please try again."))
+
+.then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
+
+.then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
+  task.addEventListener("submit", updateTask)
+}))
+.catch(() => alert("There was an error finding the tasks! Please try again."))
 }
 
 function checkBox(taskObject) {
-  if (taskObject.completed) {
-    return "checked"
-  }
+if (taskObject.completed) {
+  return "checked"
+}
 }
 
 function generateTaskHTML(taskObject) {
-  return `
-  <p class="task-content">${taskObject["content"]}</p>
-  <span class="assigned">assigned to: ${taskObject["memberEmail"]}</span><br>
-  <form class="task" id="complete-task${taskObject.id}">
-  <input name="completed" type="checkbox" ${checkBox(taskObject)}><span class="check">Completed Task</span><br>
-  <input class="initial-button small-button bold" type="submit">
-  </form>
-  `
+return `
+<p class="task-content">${taskObject["content"]}</p>
+<span class="assigned">assigned to: ${taskObject["memberEmail"]}</span><br>
+<form class="task" id="complete-task${taskObject.id}">
+<input name="completed" type="checkbox" ${checkBox(taskObject)}><span class="check">Completed Task</span><br>
+<input class="initial-button small-button bold" type="submit">
+</form>
+`
 }
 
 
@@ -120,177 +120,175 @@ function generateTaskHTML(taskObject) {
 //this generates projects index
 
 function generateProjectHTML(projectObject) {
-  const id = projectObject.id
-  return `
-
-  <span class="label-font underline project${id}"><br>Project Name: </span>
-  <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
-  <span class="label-font underline project${id}">Due Date: </span>
-  <span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
-  <form class="delete-project bold project${id}" id="${id}">
-  <input class="initial-button small-button " type="submit" value="Delete Project">
-  <br></form>
-  `
+const id = projectObject.id
+return `
+<span class="label-font underline project${id}"><br>Project Name: </span>
+<span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.name}</span><br>
+<span class="label-font underline project${id}">Due Date: </span>
+<span class="project-font fake-hover show-project project${id}" id="${id}">${projectObject.dueDate}</span><br>
+<form class="delete-project bold project${id}" id="${id}">
+<input class="initial-button small-button " type="submit" value="Delete Project">
+<br></form>
+`
 }
 
 //////////////////////////////
 
 function createDivForAllProjects() {
-  mainContainer.innerHTML += `
-  <div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
-  
-  </div>
-  <br><br>
-  `
+mainContainer.innerHTML += `
+<div class="shadow center responsive creating-project-div all-projects-div" id="all-projects-div">
+
+</div>
+<br><br>
+`
 }
 
 
 function generateOneProjectHTML(projectObject){
-  const id = projectObject.id
-  
-  mainContainer.innerHTML += `
-  <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
-  <span class="label-font underline" id="${id}">Project Name</span><br>
-  <span class="project-font bold">${projectObject.name}</span><br>
-  <span class="label-font underline" id="${id}">Due Date</span><br>
-  <span class="project-font bold">${projectObject.dueDate}</span><br>
-  <span class="label-font underline" id="${id}">Supervisor</span><br>
-  <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
+const id = projectObject.id
 
-  <br>
-  <div id="tasks-container">
-  </div>
-  </div>
-  <br><br>
-  `
-  homeButton()
+mainContainer.innerHTML += `
+<div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
+<span class="label-font underline" id="${id}">Project Name</span><br>
+<span class="project-font bold">${projectObject.name}</span><br>
+<span class="label-font underline" id="${id}">Due Date</span><br>
+<span class="project-font bold">${projectObject.dueDate}</span><br>
+<span class="label-font underline" id="${id}">Supervisor</span><br>
+<span class="project-font bold">${projectObject.groupSupervisor}</span><br>
+<br>
+<div id="tasks-container">
+</div>
+</div>
+<br><br>
+`
+homeButton()
 }
 
 function findOneProject(e) {
-  removeChildrenFromMain()
-  const id = e.target.id
+removeChildrenFromMain()
+const id = e.target.id
 
-  fetch(`http://localhost:3000/projects/${id}`)
-  .then(resp => { 
-    if (resp.ok){
-    return resp.json()
-  }else {
-    alert("There was an error finding the project! Please try again.")
-  }
+fetch(`http://localhost:3000/projects/${id}`)
+.then(resp => { 
+  if (resp.ok){
+  return resp.json()
+}else {
+  alert("There was an error finding the project! Please try again.")
+}
 
+})
+.then(project => {
+  return(
+    new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
+    )
   })
   .then(project => {
-    return(
-      new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])
-      )
-    })
-    .then(project => {
-      generateOneProjectHTML(project)
-      fetchTasks(project.id)
-    })
-    .catch(() => alert("There was an error finding the project! Please try again."))
+    generateOneProjectHTML(project)
+    fetchTasks(project.id)
+  })
+  .catch(() => alert("There was an error finding the project! Please try again."))
 
 }
 
 function deleteProject(e) {
-  e.preventDefault()
-  const id = e.target.id
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      project: {id: id}
-    })
-  }
-  fetch(`http://localhost:3000/projects/${id}`, options)
-  .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
-  .catch(() => alert("There was an error deleting the project! Please try again."))
+e.preventDefault()
+const id = e.target.id
+const options = {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    project: {id: id}
+  })
+}
+fetch(`http://localhost:3000/projects/${id}`, options)
+.then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+.catch(() => alert("There was an error deleting the project! Please try again."))
 }
 
 function findAllProjects() {
-  removeChildrenFromMain()
-  createDivForAllProjects()
-  homeButton()
-  const allProjectsDiv = document.getElementById("all-projects-div")
-  fetch("http://localhost:3000/projects")
-  .then(resp => { 
-    if (resp.ok){
-    return resp.json()
-  }else {
-    alert("There was an error finding all the projects! Please try again.")
-  }
-  })
-  .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
-  .then(projects => projects.forEach(project => { 
-    allProjectsDiv.innerHTML += generateProjectHTML(project)
+removeChildrenFromMain()
+createDivForAllProjects()
+homeButton()
+const allProjectsDiv = document.getElementById("all-projects-div")
+fetch("http://localhost:3000/projects")
+.then(resp => { 
+  if (resp.ok){
+  return resp.json()
+}else {
+  alert("There was an error finding all the projects! Please try again.")
+}
+})
+.then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
+.then(projects => projects.forEach(project => { 
+  allProjectsDiv.innerHTML += generateProjectHTML(project)
+}))
+.then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
+  child.addEventListener("click", findOneProject)}))
+.then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
+  child.addEventListener("submit", deleteProject)
   }))
-  .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
-    child.addEventListener("click", findOneProject)}))
-  .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
-    child.addEventListener("submit", deleteProject)
-    }))
-    .catch(() => alert("There was an error finding all the projects! Please try again."))
+  .catch(() => alert("There was an error finding all the projects! Please try again."))
 
 }
 
 function deleteInitialAndContinue() {
-    removeChildrenFromMain()
-    findOrCreateProjectDiv()
-    // const findProjectButton = document.getElementById("find-project-button")
-    const createNewProjectButton = document.getElementById("create-new-project-button")
-    const findAllProjectsButton = document.getElementById("all-projects-button")
-    // findProjectButton.addEventListener("click", findProjectForm)
-    createNewProjectButton.addEventListener("click", askUserForEmail)
-    findAllProjectsButton.addEventListener("click", findAllProjects)
+  removeChildrenFromMain()
+  findOrCreateProjectDiv()
+  // const findProjectButton = document.getElementById("find-project-button")
+  const createNewProjectButton = document.getElementById("create-new-project-button")
+  const findAllProjectsButton = document.getElementById("all-projects-button")
+  // findProjectButton.addEventListener("click", findProjectForm)
+  createNewProjectButton.addEventListener("click", askUserForEmail)
+  findAllProjectsButton.addEventListener("click", findAllProjects)
 }
 
-function addAnotherMemberInput() {
-    const groupMembers = document.getElementById("group-members")
-    groupMembers.innerHTML += `
-    <br>
-    <label class="project-name label-font">Group Member's E-mail</label><br><br>
-    <input type="text" class="creating-project-input" value=" "><br><br>
-    <label class="project-name label-font">Task</label><br><br>
-    <input type="text" class="creating-project-input task-input" value=" "><br>
-    `
-}
+// function addAnotherMemberInput() {
+//   const groupMembers = document.getElementById("group-members")
+//   groupMembers.innerHTML += `
+//   <br>
+//   <label class="project-name label-font">Group Member's E-mail</label><br><br>
+//   <input type="text" class="creating-project-input" value=" "><br><br>
+//   <label class="project-name label-font">Task</label><br><br>
+//   <input type="text" class="creating-project-input task-input" value=" "><br>
+//   `
+// }
 
 function newProjectForm() {
-    removeChildrenFromMain()
-    mainContainer.innerHTML += `
-    <div class="creating-project-div center responsive shadow" id="creating-project-div">
-          <form id="creating-project-form">
-            <br>
-            <label class="project-name label-font">Project Name</label><br><br>
-            <input type="text" class="creating-project-input" value=" "><br><br>
-            <label class="project-name label-font">Due Date</label><br><br>
-            <input type="date" class="creating-project-input" value="2022-05-05"><br><br>
-            <label class="project-name label-font">Group Supervisor's E-mail</label><br><br>
-            <input type="text" class="creating-project-input" value=" "><br><br>
-            <div id="group-members">
-            <label class="project-name label-font">Group Member's E-mail</label><br><br>
-            <input type="text" class="creating-project-input" value=" "><br><br>
-            <label class="project-name label-font">Task</label><br><br>
-            <input type="text" class="creating-project-input task-input" value=" "><br><br>
-            <label class="project-name label-font">Group Member's E-mail</label><br><br>
-            <input type="text" class="creating-project-input" value=" "><br><br>
-            <label class="project-name label-font">Task</label><br><br>
-            <input type="text" class="creating-project-input task-input" value=" "><br>
-            </div>
-            <br><br>
-            <input type="submit" class="initial-button bold" value="Next">
-            <br><br><br>
-          </form>
-          <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
-            <br><br><br>
-        </div><br><br><br>`
-    homeButton()
-    const creatingProjectForm = document.getElementById("creating-project-form")
-    const addAnotherMember = document.getElementById("add-another-member")
-    creatingProjectForm.addEventListener("submit", submitProject)
-    addAnotherMember.addEventListener("click", addAnotherMemberInput)
+  removeChildrenFromMain()
+  mainContainer.innerHTML += `
+  <div class="creating-project-div center responsive shadow" id="creating-project-div">
+        <form id="creating-project-form">
+          <br>
+          <label class="project-name label-font">Project Name</label><br><br>
+          <input type="text" class="creating-project-input" value=" "><br><br>
+          <label class="project-name label-font">Due Date</label><br><br>
+          <input type="date" class="creating-project-input" value="2022-05-05"><br><br>
+          <label class="project-name label-font">Group Supervisor's E-mail</label><br><br>
+          <input type="text" class="creating-project-input" value=" "><br><br>
+          <div id="group-members">
+          <label class="project-name label-font">Group Member's E-mail</label><br><br>
+          <input type="text" class="creating-project-input" value=" "><br><br>
+          <label class="project-name label-font">Task</label><br><br>
+          <input type="text" class="creating-project-input task-input" value=" "><br><br>
+          <label class="project-name label-font">Group Member's E-mail</label><br><br>
+          <input type="text" class="creating-project-input" value=" "><br><br>
+          <label class="project-name label-font">Task</label><br><br>
+          <input type="text" class="creating-project-input task-input" value=" "><br>
+          </div>
+          <br><br>
+          <input type="submit" class="initial-button bold" value="Next">
+          <br><br><br>
+        </form>
+        <button class="initial-button bold" id="add-another-member">Add Another Group Member</button>
+          <br><br><br>
+      </div><br><br><br>`
+  homeButton()
+  const creatingProjectForm = document.getElementById("creating-project-form")
+  const addAnotherMember = document.getElementById("add-another-member")
+  creatingProjectForm.addEventListener("submit", submitProject)
+  addAnotherMember.addEventListener("click", Project.addAnotherMemberInput)
 }
 
 // function findProjectBackend(e) {
@@ -326,53 +324,53 @@ function newProjectForm() {
 //     //     })
 //     //   }
 //     //   fetch("http://localhost:3000/search")
-  
+
 //     homeButton()
 // }
 
 function submitProject(e) {
-    e.preventDefault()
- 
-    let userInput = Array.from(e.target).map(ele => ele.value)
-    let tasks = userInput.slice(3, userInput.length-1)
-    
-    //need every two elements to be an object
-    let fetchObject = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2], tasks: tasks} 
-      })
-    }
+  e.preventDefault()
 
-    //send data to backend
-    fetch("http://localhost:3000/projects", fetchObject)
-    .then(resp => { 
-      if (resp.ok){
-      return resp.json()
-    }else {
-      alert("There was an error submitting the project! Please try again.")
-    }
+  let userInput = Array.from(e.target).map(ele => ele.value)
+  let tasks = userInput.slice(3, userInput.length-1)
+  
+  //need every two elements to be an object
+  let fetchObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2], tasks: tasks} 
     })
-    .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
-    .then(project => {
-      removeChildrenFromMain()
-      generateOneProjectHTML(project)
-      fetchTasks(project.id)
-    })
-    .catch(() => alert("There was an error saving the project! Please try again."))
-    // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
+  }
+
+  //send data to backend
+  fetch("http://localhost:3000/projects", fetchObject)
+  .then(resp => { 
+    if (resp.ok){
+    return resp.json()
+  }else {
+    alert("There was an error submitting the project! Please try again.")
+  }
+  })
+  .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
+  .then(project => {
+    removeChildrenFromMain()
+    generateOneProjectHTML(project)
+    fetchTasks(project.id)
+  })
+  .catch(() => alert("There was an error saving the project! Please try again."))
+  // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
 }
 
 function goBackToInitial() {
-    removeChildrenFromMain()
-    createInitialContact()
-    document.getElementById("first-click").click()
-    const initialButton = document.getElementById("initial-button")
-    initialButton.addEventListener("click", deleteInitialAndContinue)
-    
+  removeChildrenFromMain()
+  createInitialContact()
+  document.getElementById("first-click").click()
+  const initialButton = document.getElementById("initial-button")
+  initialButton.addEventListener("click", deleteInitialAndContinue)
+  
 }
 
 initialButton.addEventListener("click", deleteInitialAndContinue)
