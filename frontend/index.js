@@ -57,22 +57,22 @@ function askUserForEmail() {
 /// TASK FUNCTIONS ////
 
 //this will be a callback that will update the task
-function updateTask(e) {
-e.preventDefault()
-const id = e.target.id.split("complete-task")[1]
-let checkmark = e.target[0].checked
-let options = {
-  method: "PATCH",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    completed: {checkmark}
-  })
-}
-//fetch task
-fetch(`http:localhost:3000/tasks/${id}`, options)
-}
+// function updateTask(e) {
+// e.preventDefault()
+// const id = e.target.id.split("complete-task")[1]
+// let checkmark = e.target[0].checked
+// let options = {
+//   method: "PATCH",
+//   headers: {
+//     "Content-Type": "application/json"
+//   },
+//   body: JSON.stringify({
+//     completed: {checkmark}
+//   })
+// }
+// //fetch task
+// fetch(`http:localhost:3000/tasks/${id}`, options)
+// }
 
 function fetchTasks(projectObjectid) {
 const tasksContainer = document.getElementById(`tasks-container`)
@@ -91,7 +91,7 @@ fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
 .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
 
 .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
-  task.addEventListener("submit", updateTask)
+  task.addEventListener("submit", Task.updateTask)
 }))
 .catch(() => alert("There was an error finding the tasks! Please try again."))
 }
