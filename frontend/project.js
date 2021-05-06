@@ -120,15 +120,15 @@ class Project {
             .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
             .then(project => {
               removeChildrenFromMain()
-              generateOneProjectHTML(project)
-              fetchTasks(project.id)
+              project.generateOneProjectHTML()
+              project.fetchTasks()
             })
             .catch(() => alert("There was an error saving the project! Please try again."))
             // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
           }
 
     /// instance methods
-
+          // is this better here or in the Task class?
     fetchTasks() {
         // console.log(this)
         const tasksContainer = document.getElementById(`tasks-container`)
@@ -152,7 +152,25 @@ class Project {
         .catch(() => alert("There was an error finding the tasks! Please try again."))
         }
 
-
+    generateOneProjectHTML(){
+        const id = this.id
+        
+        mainContainer.innerHTML += `
+        <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
+        <span class="label-font underline" id="${id}">Project Name</span><br>
+        <span class="project-font bold">${this.name}</span><br>
+        <span class="label-font underline" id="${id}">Due Date</span><br>
+        <span class="project-font bold">${this.dueDate}</span><br>
+        <span class="label-font underline" id="${id}">Supervisor</span><br>
+        <span class="project-font bold">${this.groupSupervisor}</span><br>
+        <br>
+        <div id="tasks-container">
+        </div>
+        </div>
+        <br><br>
+        `
+        homeButton()
+    }
 }
 
 

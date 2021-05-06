@@ -143,25 +143,25 @@ return `
 // }
 
 
-function generateOneProjectHTML(projectObject){
-const id = projectObject.id
+// function generateOneProjectHTML(projectObject){
+// const id = projectObject.id
 
-mainContainer.innerHTML += `
-<div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
-<span class="label-font underline" id="${id}">Project Name</span><br>
-<span class="project-font bold">${projectObject.name}</span><br>
-<span class="label-font underline" id="${id}">Due Date</span><br>
-<span class="project-font bold">${projectObject.dueDate}</span><br>
-<span class="label-font underline" id="${id}">Supervisor</span><br>
-<span class="project-font bold">${projectObject.groupSupervisor}</span><br>
-<br>
-<div id="tasks-container">
-</div>
-</div>
-<br><br>
-`
-homeButton()
-}
+// mainContainer.innerHTML += `
+// <div class="shadow center responsive creating-project-div all-projects-div" id="project${id}">
+// <span class="label-font underline" id="${id}">Project Name</span><br>
+// <span class="project-font bold">${projectObject.name}</span><br>
+// <span class="label-font underline" id="${id}">Due Date</span><br>
+// <span class="project-font bold">${projectObject.dueDate}</span><br>
+// <span class="label-font underline" id="${id}">Supervisor</span><br>
+// <span class="project-font bold">${projectObject.groupSupervisor}</span><br>
+// <br>
+// <div id="tasks-container">
+// </div>
+// </div>
+// <br><br>
+// `
+// homeButton()
+// }
 
 function findOneProject(e) {
 removeChildrenFromMain()
@@ -182,7 +182,7 @@ fetch(`http://localhost:3000/projects/${id}`)
     )
   })
   .then(project => {
-    generateOneProjectHTML(project)
+    project.generateOneProjectHTML()
     project.fetchTasks()
   })
   .catch(() => alert("There was an error finding the project! Please try again."))
