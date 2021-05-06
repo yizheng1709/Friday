@@ -127,5 +127,34 @@ class Project {
             // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
           }
 
+    /// instance methods
+
+    fetchTasks() {
+        // console.log(this)
+        const tasksContainer = document.getElementById(`tasks-container`)
+        fetch(`http://localhost:3000/projects/${this.id}/tasks`)
+        .then(resp => { 
+          if (resp.ok){
+          return resp.json()
+        }else {
+          alert("There was an error finding the tasks! Please try again.")
+        }
+        })
+        .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
+        .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
+        
+        
+        .then(document.getElementById(`project${this.id}`).append(tasksContainer))
+        
+        .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
+          task.addEventListener("submit", Task.updateTask)
+        }))
+        .catch(() => alert("There was an error finding the tasks! Please try again."))
+        }
+
+
 }
+
+
+
 

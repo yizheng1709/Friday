@@ -74,27 +74,27 @@ function askUserForEmail() {
 // fetch(`http:localhost:3000/tasks/${id}`, options)
 // }
 
-function fetchTasks(projectObjectid) {
-const tasksContainer = document.getElementById(`tasks-container`)
-fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
-.then(resp => { 
-  if (resp.ok){
-  return resp.json()
-}else {
-  alert("There was an error finding the tasks! Please try again.")
-}
-})
-.then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
-.then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
+// function fetchTasks(projectObjectid) {
+// const tasksContainer = document.getElementById(`tasks-container`)
+// fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
+// .then(resp => { 
+//   if (resp.ok){
+//   return resp.json()
+// }else {
+//   alert("There was an error finding the tasks! Please try again.")
+// }
+// })
+// .then(tasks => tasks.map(task => new Task(task["project_id"], task["content"], task["member_email"], task["completed"], task["id"])))
+// .then(tasks => tasks.forEach(task => tasksContainer.innerHTML += generateTaskHTML(task)))
 
 
-.then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
+// .then(document.getElementById(`project${projectObjectid}`).append(tasksContainer))
 
-.then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
-  task.addEventListener("submit", Task.updateTask)
-}))
-.catch(() => alert("There was an error finding the tasks! Please try again."))
-}
+// .then(() => Array.from(document.getElementsByClassName("task")).forEach(function(task){
+//   task.addEventListener("submit", Task.updateTask)
+// }))
+// .catch(() => alert("There was an error finding the tasks! Please try again."))
+// }
 
 function checkBox(taskObject) {
 if (taskObject.completed) {
@@ -183,7 +183,7 @@ fetch(`http://localhost:3000/projects/${id}`)
   })
   .then(project => {
     generateOneProjectHTML(project)
-    fetchTasks(project.id)
+    project.fetchTasks()
   })
   .catch(() => alert("There was an error finding the project! Please try again."))
 
