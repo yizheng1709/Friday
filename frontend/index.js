@@ -99,8 +99,7 @@ fetch(`http://localhost:3000/projects/${projectObjectid}/tasks`)
 function checkBox(taskObject) {
 if (taskObject.completed) {
   return "checked"
-}
-}
+}}
 
 function generateTaskHTML(taskObject) {
 return `
@@ -207,31 +206,31 @@ fetch(`http://localhost:3000/projects/${id}`, options)
 .catch(() => alert("There was an error deleting the project! Please try again."))
 }
 
-function findAllProjects() {
-removeChildrenFromMain()
-createDivForAllProjects()
-homeButton()
-const allProjectsDiv = document.getElementById("all-projects-div")
-fetch("http://localhost:3000/projects")
-.then(resp => { 
-  if (resp.ok){
-  return resp.json()
-}else {
-  alert("There was an error finding all the projects! Please try again.")
-}
-})
-.then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
-.then(projects => projects.forEach(project => { 
-  allProjectsDiv.innerHTML += generateProjectHTML(project)
-}))
-.then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
-  child.addEventListener("click", findOneProject)}))
-.then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
-  child.addEventListener("submit", deleteProject)
-  }))
-  .catch(() => alert("There was an error finding all the projects! Please try again."))
+// function findAllProjects() {
+// removeChildrenFromMain()
+// createDivForAllProjects()
+// homeButton()
+// const allProjectsDiv = document.getElementById("all-projects-div")
+// fetch("http://localhost:3000/projects")
+// .then(resp => { 
+//   if (resp.ok){
+//   return resp.json()
+// }else {
+//   alert("There was an error finding all the projects! Please try again.")
+// }
+// })
+// .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
+// .then(projects => projects.forEach(project => { 
+//   allProjectsDiv.innerHTML += generateProjectHTML(project)
+// }))
+// .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
+//   child.addEventListener("click", findOneProject)}))
+// .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
+//   child.addEventListener("submit", deleteProject)
+//   }))
+//   .catch(() => alert("There was an error finding all the projects! Please try again."))
 
-}
+// }
 
 function deleteInitialAndContinue() {
   removeChildrenFromMain()
@@ -241,7 +240,7 @@ function deleteInitialAndContinue() {
   const findAllProjectsButton = document.getElementById("all-projects-button")
   // findProjectButton.addEventListener("click", findProjectForm)
   createNewProjectButton.addEventListener("click", askUserForEmail)
-  findAllProjectsButton.addEventListener("click", findAllProjects)
+  findAllProjectsButton.addEventListener("click", Project.findAllProjects)
 }
 
 // function addAnotherMemberInput() {
@@ -328,41 +327,41 @@ function deleteInitialAndContinue() {
 //     homeButton()
 // }
 
-function submitProject(e) {
-  e.preventDefault()
+// function submitProject(e) {
+//   e.preventDefault()
 
-  let userInput = Array.from(e.target).map(ele => ele.value)
-  let tasks = userInput.slice(3, userInput.length-1)
+//   let userInput = Array.from(e.target).map(ele => ele.value)
+//   let tasks = userInput.slice(3, userInput.length-1)
   
-  //need every two elements to be an object
-  let fetchObject = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2], tasks: tasks} 
-    })
-  }
+//   //need every two elements to be an object
+//   let fetchObject = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       project: {name: userInput[0], due_date: userInput[1], group_supervisor: userInput[2], tasks: tasks} 
+//     })
+//   }
 
-  //send data to backend
-  fetch("http://localhost:3000/projects", fetchObject)
-  .then(resp => { 
-    if (resp.ok){
-    return resp.json()
-  }else {
-    alert("There was an error submitting the project! Please try again.")
-  }
-  })
-  .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
-  .then(project => {
-    removeChildrenFromMain()
-    generateOneProjectHTML(project)
-    fetchTasks(project.id)
-  })
-  .catch(() => alert("There was an error saving the project! Please try again."))
-  // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
-}
+//   //send data to backend
+//   fetch("http://localhost:3000/projects", fetchObject)
+//   .then(resp => { 
+//     if (resp.ok){
+//     return resp.json()
+//   }else {
+//     alert("There was an error submitting the project! Please try again.")
+//   }
+//   })
+//   .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
+//   .then(project => {
+//     removeChildrenFromMain()
+//     generateOneProjectHTML(project)
+//     fetchTasks(project.id)
+//   })
+//   .catch(() => alert("There was an error saving the project! Please try again."))
+//   // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
+// }
 
 function goBackToInitial() {
   removeChildrenFromMain()
