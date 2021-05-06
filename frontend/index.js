@@ -189,22 +189,22 @@ fetch(`http://localhost:3000/projects/${id}`)
 
 }
 
-function deleteProject(e) {
-e.preventDefault()
-const id = e.target.id
-const options = {
-  method: "DELETE",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    project: {id: id}
-  })
-}
-fetch(`http://localhost:3000/projects/${id}`, options)
-.then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
-.catch(() => alert("There was an error deleting the project! Please try again."))
-}
+// function deleteProject(e) {
+// e.preventDefault()
+// const id = e.target.id
+// const options = {
+//   method: "DELETE",
+//   headers: {
+//     "Content-Type": "application/json"
+//   },
+//   body: JSON.stringify({
+//     project: {id: id}
+//   })
+// }
+// fetch(`http://localhost:3000/projects/${id}`, options)
+// .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+// .catch(() => alert("There was an error deleting the project! Please try again."))
+// }
 
 // function findAllProjects() {
 // removeChildrenFromMain()

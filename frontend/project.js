@@ -85,7 +85,7 @@ class Project {
         .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
           child.addEventListener("click", findOneProject)}))
         .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
-          child.addEventListener("submit", deleteProject)
+          child.addEventListener("submit", Project.deleteProject)
           }))
         .catch(() => alert("There was an error finding all the projects! Please try again."))
         
@@ -126,6 +126,25 @@ class Project {
             .catch(() => alert("There was an error saving the project! Please try again."))
             // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
           }
+
+
+            
+    static deleteProject(e) {
+        e.preventDefault()
+        const id = e.target.id
+        const options = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            project: {id: id}
+        })
+        }
+        fetch(`http://localhost:3000/projects/${id}`, options)
+        .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+        .catch(() => alert("There was an error deleting the project! Please try again."))
+    }  
 
     /// instance methods
           // is this better here or in the Task class?
