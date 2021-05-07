@@ -69,7 +69,7 @@ class Project {
         removeChildrenFromMain()
         Project.createDivForAllProjects()
         homeButton()
-        const allProjectsDiv = document.getElementById("all-projects-div")
+        // const allProjectsDiv = document.getElementById("all-projects-div")
         fetch("http://localhost:3000/projects")
         .then(resp => { 
           if (resp.ok){
@@ -79,25 +79,81 @@ class Project {
         }
         })
         .then(data => data.map(project => new Project(project["id"], project["name"], project["due_date"], project["group_supervisor"], project["completed"])))
-        .then(projects => projects.forEach(project => { 
-          allProjectsDiv.innerHTML += project.generateProjectHTML()
-        }))
-        .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
-          child.addEventListener("click", Project.findOneProject)}))
-        .then(() => Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
-          child.addEventListener("submit", Project.deleteProject)
-          }))
-        .catch(() => alert("There was an error finding all the projects! Please try again."))
+        .then(projects => {projects.forEach(project => { 
+         project.generateProjectHTML()
+        })
+        return projects.forEach(project => {
+          document.getElementById(`delete-${project.id}`).addEventListener("submit", project.deleteProject.bind(project))
+
+        })}
+        )
         
+        .then(() => Array.from(document.getElementsByClassName("show-project")).forEach(function (child) {
+        child.addEventListener("click", Project.findOneProject)}))
+
+        // .then(() => 
+        //   {Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
+        //     // {debugger}
+        //     // value of this is where the function is declared
+        //     // unless it's called on the left object
+        //     {debugger}
+        //     // get this = form
+        //     let boundChild = deleteProject.bind(child)
+        //     child.addEventListener("submit", boundChild)
+            
+            // function(e) {
+            //   // e.preventDefault()
+            //   // console.log(this)
+            //   this.deleteProject
+            // })
+          // })})
+          .catch(() => alert("There was an error finding all the projects! Please try again."))
         }
 
+        deleteProject(e) {
+          //  {debugger}
+         e.preventDefault()
+          const id = this.id
+          const options = {
+          method: "DELETE",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              project: {id: id}
+          })
+          }
+          fetch(`http://localhost:3000/projects/${id}`, options)
+          .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+          .catch(() => alert("There was an error deleting the project! Please try again."))
+        } 
+        
+      // deleteProject(e) {
+      //   //  {debugger}
+      //   e.preventDefault()
+      //   const id = e.target.id
+      //   const options = {
+      //   method: "DELETE",
+      //   headers: {
+      //       "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //       project: {id: id}
+      //   })
+      //   }
+      //   fetch(`http://localhost:3000/projects/${id}`, options)
+      //   .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+      //   .catch(() => alert("There was an error deleting the project! Please try again."))
+      // } 
+
+
         static findOneProject(e) {
-            removeChildrenFromMain()
-            const id = e.target.id
+          removeChildrenFromMain()
+          const id = e.target.id
           
-            fetch(`http://localhost:3000/projects/${id}`)
-            .then(resp => { 
-              if (resp.ok){
+          fetch(`http://localhost:3000/projects/${id}`)
+          .then(resp => { 
+            if (resp.ok){
               return resp.json()
             }else {
               alert("There was an error finding the project! Please try again.")
@@ -138,39 +194,39 @@ class Project {
             fetch("http://localhost:3000/projects", fetchObject)
             .then(resp => { 
               if (resp.ok){
-              return resp.json()
-            }else {
-              alert("There was an error submitting the project! Please try again.")
+                return resp.json()
+              }else {
+                alert("There was an error submitting the project! Please try again.")
             }
-            })
-            .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
-            .then(project => {
-              removeChildrenFromMain()
-              project.generateOneProjectHTML()
-              project.fetchTasks()
-            })
-            .catch(() => alert("There was an error saving the project! Please try again."))
-            // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
-          }
-
-
-            
-    static deleteProject(e) {
-        e.preventDefault()
-        const id = e.target.id
-        const options = {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            project: {id: id}
-        })
+          })
+          .then(obj => new Project(obj["id"], obj["name"], obj["due_date"], obj["group_supervisor"], obj["completed"]))
+          .then(project => {
+            removeChildrenFromMain()
+            project.generateOneProjectHTML()
+            project.fetchTasks()
+          })
+          .catch(() => alert("There was an error saving the project! Please try again."))
+          // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
         }
-        fetch(`http://localhost:3000/projects/${id}`, options)
-        .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
-        .catch(() => alert("There was an error deleting the project! Please try again."))
-    }  
+        
+        
+            
+    // static deleteProject(e) {
+    //     e.preventDefault()
+    //     const id = e.target.id
+    //     const options = {
+    //     method: "DELETE",
+    //     headers: {
+      //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         project: {id: id}
+    //     })
+    //     }
+    //     fetch(`http://localhost:3000/projects/${id}`, options)
+    //     .then(() => Array.from(document.getElementsByClassName(`project${id}`)).forEach(child => child.remove()))
+    //     .catch(() => alert("There was an error deleting the project! Please try again."))
+    // }  
 
     /// instance methods
           // is this better here or in the Task class?
@@ -219,16 +275,23 @@ class Project {
 
     generateProjectHTML() {
         const id = this.id
-        return `
+        const allProjectsDiv = document.getElementById("all-projects-div")
+
+        allProjectsDiv.innerHTML += `
         <span class="label-font underline project${id}"><br>Project Name: </span>
         <span class="project-font fake-hover show-project project${id}" id="${id}">${this.name}</span><br>
         <span class="label-font underline project${id}">Due Date: </span>
         <span class="project-font fake-hover show-project project${id}" id="${id}">${this.dueDate}</span><br>
-        <form class="delete-project bold project${id}" id="${id}">
+        
+        <form class="delete-project bold project${id}" id="delete-${id}">
         <input class="initial-button small-button " type="submit" value="Delete Project">
         <br></form>
         `
-        }
+
+        
+      }
+
+
 }
 
 
