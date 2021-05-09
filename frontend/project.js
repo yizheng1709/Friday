@@ -93,10 +93,8 @@ class Project {
 
         // .then(() => 
         //   {Array.from(document.getElementsByClassName("delete-project")).forEach(function (child) {
-        //     // {debugger}
         //     // value of this is where the function is declared
         //     // unless it's called on the left object
-        //     {debugger}
         //     // get this = form
         //     let boundChild = deleteProject.bind(child)
         //     child.addEventListener("submit", boundChild)
@@ -111,7 +109,6 @@ class Project {
         }
 
         deleteProject(e) {
-          //  {debugger}
          e.preventDefault()
           const id = this.id
           const options = {
@@ -209,7 +206,6 @@ class Project {
           // // AFTER SUBMITTING, GENERATE SAME HTML AS SHOW PAGE (with tasks)
         }
         
-        
             
     // static deleteProject(e) {
     //     e.preventDefault()
@@ -229,9 +225,8 @@ class Project {
     // }  
 
     /// instance methods
-          // is this better here or in the Task class?
+          
     fetchTasks() {
-        // console.log(this)
         const tasksContainer = document.getElementById(`tasks-container`)
         fetch(`http://localhost:3000/projects/${this.id}/tasks`)
         .then(resp => { 
