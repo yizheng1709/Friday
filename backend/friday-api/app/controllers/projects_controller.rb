@@ -8,16 +8,16 @@ class ProjectsController < ApplicationController
         render json: project, only: [:id, :name, :due_date, :group_supervisor, :completed]
     end
 
-    def search 
-        binding.pry
-    end
+    # def search 
+    #     binding.pry
+    # end
 
     def create 
         project = Project.create(project_params)
         #AR create  method to build relationship
         tasks = params[:project][:tasks]
         tasks.each_slice(2) do |email, content|
-            binding.pry
+            # binding.pry
             project.tasks.create(member_email: email.strip, content: content.strip)
         end
         #iterate through params[:project][:tasks]
