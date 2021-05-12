@@ -35,6 +35,7 @@ class Task{
         
 
     generateTaskHTML() {
+      
         return `
         <p class="task-content">${this["content"]}</p>
         <span class="assigned">assigned to: ${this["memberEmail"]}</span><br>

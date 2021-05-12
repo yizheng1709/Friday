@@ -16,8 +16,9 @@ class ProjectsController < ApplicationController
         project = Project.create(project_params)
         #AR create  method to build relationship
         tasks = params[:project][:tasks]
-        tasks.each_slice(2) do |content, email|
-            project.tasks.create(content: content.strip, member_email: email.strip)
+        tasks.each_slice(2) do |email, content|
+            binding.pry
+            project.tasks.create(member_email: email.strip, content: content.strip)
         end
         #iterate through params[:project][:tasks]
         render json: project
